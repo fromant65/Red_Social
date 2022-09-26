@@ -1,0 +1,33 @@
+body{
+    background: #ddd !important;
+}
+
+nav{
+    height: 40px;
+    background-color: rgb(100, 160, 210);
+}
+
+.cuerpo{
+    background-color: #fff;
+    margin: 50px;
+    max-width: 600px !important;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px black;
+}
+
+.titulo{
+    text-align: center;
+    padding-top: 20px;
+}
+
+.ingresar{
+    display: flex;
+}
+
+#login, #registrarse{
+    margin: 30px;
+    padding: 10px;;
+    flex-grow: 1;
+    border: none;
+    border-radius: 5px;
+}
