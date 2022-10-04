@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/home.css">
     <title>Home</title>
 </head>
+
 <body>
-    <h2>Bienvenido a Textbook</h2>
-    <a href="/logout">click para terminar la sesión</a>
+    <div class="row">
+        <aside class="col-4">
+            <div>
+                <a href="#" class="active"><i class="fa-regular fa-book"> </i><p>Texbook</p></a>
+            </div>
+            <div>
+                <a href="#"><i class="fa-regular fa-user"></i><p>Perfil</p></a>
+            </div>
+            <div>
+                <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Finalizar sesión</p></a>
+            </div>
+        </aside>
+        <section class="col">
+            <form class="crear-publicacion" action="" method="post">
+                <label for="publicacion">Inicio</label>
+                <textarea name="publicacion" id="publicacion" class="publicacion" cols="30" rows="2" placeholder="¿Qué estás pensando?"></textarea>
+                <div class="submit-container">
+                    <input type="submit" class="publicar" value="Publicar">
+                </div>
+            </form>
+            <button class="cargar-nuevas">Cargar nuevas publicaciones</button>
+            <div class="publicaciones">
+            <button class="cargar-mas">Cargar más publicaciones</button>
+            </div>
+        </section>
+    </div>
+    <script src="js/home.js"></script>
+    <script src="js/publicar.js"></script>
+    <script src="js/cargarPublicaciones.js"></script>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

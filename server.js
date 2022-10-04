@@ -33,7 +33,6 @@ app.use(express.static(path.join(__dirname, '/public')))
 app.use('/', require('./routes/root'))
 app.use('/register', require('./routes/register'))
 app.use('/login', require('./routes/login'))
-//app.use(verifyJWT);
 app.use('/home', require('./routes/home'))
 
 mongoose.connection.once('open', ()=>{
