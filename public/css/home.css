@@ -145,7 +145,8 @@ aside div:hover{
 
 .cargar-mas{
     border: none;
-    padding: 20px;
+    display: inline-block;
+    padding: 10px;
     margin-left: 10px;
     background-color: #eee;
     border-radius: 5px;
@@ -155,10 +156,31 @@ aside div:hover{
     background-color: #ddd;
 }
 
-.cargando-publicaciones{
-    background-color: #f66;
+.cargando-hidden {
+    display: none;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    
 }
+.cargando-visible {
+    content: " ";
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    border-color: #222 transparent #222 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}  
 
-.cargando-publicaciones:hover{
-    background-color: #f66;
-}

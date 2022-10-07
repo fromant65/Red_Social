@@ -5,27 +5,32 @@ const publicar= document.querySelector(".publicar");
 publicar.disabled = true;
 
 const submitDisponible = ()=>{
+    //Esta funcion activa el boton de publicar
     publicar.disabled = false;
     publicar.classList.add('submit-not-disabled');
 }
 
 const submitNoDisponible = ()=>{
+    //Esta funcion desactiva el boton de publicar
     publicar.disabled = true;
     publicar.classList.remove('submit-not-disabled')
 }
 
 publicacion.addEventListener('input',  (e)=>{
-    //console.log(e.data + ' . ' + publicacion.value);
+    //Si el textarea de la publicacion no tiene codigo, desactivamos el boton de publicar
+    //Si no, lo activamos
     if(e.data!==null) submitDisponible();
     if(publicacion.value=="") submitNoDisponible();
 })
 
 publicar.addEventListener("click", async(e)=>{
     e.preventDefault();
-    let request = await fetch(`${location}/publicar`);
-    let data = await request.json();
-    let fechaPublicacion = new Date();
-    //console.log(data.session.userid);
+    //Obtenemos la data de la sesión 
+    //(donde se encuentra el id de usuario con el que identificaremos quién hizo la publicación)
+    const request = await fetch(`${location}/publicar`);
+    const data = await request.json();
+    const fechaPublicacion = new Date();
+    //Hacemos la publicación
     fetch(`${location}/publicar`, {
         method: 'POST',
         headers: {
