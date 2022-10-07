@@ -25,7 +25,7 @@ publicar.addEventListener("click", async(e)=>{
     let request = await fetch(`${location}/publicar`);
     let data = await request.json();
     let fechaPublicacion = new Date();
-    console.log(data.session.userid);
+    //console.log(data.session.userid);
     fetch(`${location}/publicar`, {
         method: 'POST',
         headers: {
@@ -38,4 +38,5 @@ publicar.addEventListener("click", async(e)=>{
             "date": fechaPublicacion
         })
     })
+    publicacion.value = '';
 })

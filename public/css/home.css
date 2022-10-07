@@ -3,11 +3,18 @@ body{
 }
 /*Aside*/
 
+.aside-filler{
+    margin: 5px;
+    max-width: 300px !important;
+}
+
 aside{
     height: 100vh;
     margin: 5px;
     border-right: 1px solid #ddd;
     box-shadow: 0px 0x 5px #222;
+    max-width: 300px !important;
+    position:fixed;
 }
 
 aside div{
@@ -44,11 +51,12 @@ aside div:hover{
     }
 }
 
-/*Publicaciones*/
+/* Crear publicaciones*/
 
 .crear-publicacion{
     margin: 20px;
     border: 1px solid #ddd;
+    border-radius: 4px;
     padding: 10px;
 }
 
@@ -94,5 +102,63 @@ aside div:hover{
 }
 
 .submit-not-disabled:hover{
-    box-shadow: 0px 0px 10px rgb(70, 150, 180);;
+    box-shadow: 0px 0px 5px rgb(70, 150, 180);;
+}
+
+/*Publicaciones*/
+
+.publicacion-cargada{
+    padding-bottom: 10px;
+    margin: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.publicacion-contenido{
+    border-left: 1px solid #ddd;
+    padding-left: 10px;
+}
+
+.comentario{
+    border: none;
+    padding: 5px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.comentario:focus{
+    outline: none;
+}
+
+.comentario-enviar{
+    border: none;
+    padding: 5px;
+    margin-left: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.comentario-enviar:focus{
+    outline: none;
+}
+
+/*Cargar mas publicaciones*/
+
+.cargar-mas{
+    border: none;
+    padding: 20px;
+    margin-left: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.cargar-mas:hover{
+    background-color: #ddd;
+}
+
+.cargando-publicaciones{
+    background-color: #f66;
+}
+
+.cargando-publicaciones:hover{
+    background-color: #f66;
 }

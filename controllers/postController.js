@@ -22,13 +22,13 @@ const handleNewPost = async (req,res)=>{
 const showPosts = (req,res)=>{
     //console.log(req.body);
     const lastDate = req.body.lastPostDate;
-    let firstDate = new Date(lastDate);
+    const firstDate = new Date(lastDate);
     firstDate.setHours(firstDate.getHours()-1);
     //console.log(lastDate)
     //console.log(`First: ${firstDate}`)
     
     // El filtro {"$gt": firstDate, "$lt": lastDate} no funciona
-    Post.find({"$gt": firstDate, "$lt": lastDate}).lean().exec( (err, posts) =>{
+    Post.find({date:{"$gte": firstDate, "$lt": lastDate}}).lean().exec( (err, posts) =>{
         if(!posts) res.status(204);
         return res.status(200).json(posts);
     });
