@@ -43,5 +43,5 @@ publicar.addEventListener("click", async(e)=>{
             "date": fechaPublicacion
         })
     })
-    publicacion.value = '';
+    location.href=location;
 })

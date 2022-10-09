@@ -1,6 +1,3 @@
-//Un error que tiene este código es que al acceder a /publicar o /publicaciones 
-//no se verifica que exista una sesión activa. falta arreglar eso.
-
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -19,7 +16,8 @@ router.get('/', (req,res)=>{
 //Devolvemos la sesion para que el frontend se encargue de hacer un fetch con los datos de la publicación
 router.get('/publicar', (req,res)=>{
     let session = req.session;
-    res.json({session});
+    if(session.userid) res.json({session});
+    else res.redirect('/login');
 })
 
 //Si hacemos un post request a /home/publicar, deberemos manejar la nueva publicación desde el controlador

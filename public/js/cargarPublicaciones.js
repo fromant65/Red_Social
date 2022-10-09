@@ -10,7 +10,13 @@ const cargarMas= document.querySelector(".cargar-mas");
 const cargando = document.querySelector(".cargando-hidden");
 
 const formatearFecha = (date)=>{
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}.`;
+    let year_ = date.getFullYear();
+    //El +1 es porque getMonth retorna valores del 0 al 11
+    let month_ = (date.getMonth()+1)<10?`0${date.getMonth()+1}`:`${date.getMonth()+1}`;
+    let date_ = date.getDate()<10?`0${date.getDate()}`:`${date.getDate()}`;
+    let hours_ = date.getHours()<10?`0${date.getHours()}`:`${date.getHours()}`;
+    let minutes_ = date.getMinutes()<10?`0${date.getMinutes()}`:`${date.getMinutes()}`;
+    return `${date_}/${month_}/${year_}, ${hours_}:${minutes_}.`;
 }
 
 const createPublicationCode = (publicacion) =>{

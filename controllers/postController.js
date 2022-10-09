@@ -1,6 +1,8 @@
 const Post = require('../model/Post')
 
 const handleNewPost = async (req,res)=>{
+    let session = req.session
+    if(!session.userid) res.redirect('/login');
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -17,6 +19,8 @@ const handleNewPost = async (req,res)=>{
 }
 
 const showPosts = (req,res)=>{
+    let session = req.session
+    if(!session.userid) res.redirect('/login');
     const lastDate = req.body.lastPostDate;
     const firstDate = new Date(lastDate);
     firstDate.setHours(firstDate.getHours()-1);
