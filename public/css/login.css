@@ -26,14 +26,15 @@ body{
 
 #username, #password{
     border:none;
-    border-bottom: 2px solid blue;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px;
     flex-grow: 1;
 }
 
 #username:focus, #password:focus{
-    border:none;
     outline: none;
-    border-bottom: 2px solid #40dd40 ;
+    box-shadow: 0px 0px 5px rgb(100, 160, 210);   
 }
 
 .submit{
@@ -41,6 +42,10 @@ body{
 }
 
 #submit{
+    background-color: rgb(100, 160, 210);
+    color: white;
+    font-weight: bolder;
+    font-size: 20px;
     margin:10px;
     padding: 10px;
     border:none;
@@ -49,12 +54,17 @@ body{
 }
 
 #submit:hover{
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 5px rgb(100, 160, 210);
 }
 
-.login-redirect{
-    margin: 5px;
-    padding: 5px;
+.forget-pwd {
+    text-align: center;
+}
+
+.register-redirect{
+    border-top: 1px solid #ddd;
+    margin: 15px;
+    padding: 15px;
     text-align: center;
 }
 

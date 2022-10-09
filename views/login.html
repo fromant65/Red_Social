@@ -10,21 +10,22 @@
 </head>
 <body>
     <div class="container form-container">
-        <h2 class="titulo">Iniciar sesión.</h2>
+        <h2 class="titulo">Iniciar sesión</h2>
         <form id="login" action="login" method="post">
             <div class="user-div">
-                <label class="label-user" for="username">Nombre de usuario</label>
-                <input id="username" name="username" type="text">
+                <input id="username" name="username" type="text" placeholder="Username">
             </div>
             <div class="pwd-div">
-                <label class="label-pwd" for="password">Password</label>
-                <input id="password" name="password" type="password">
+                <input id="password" name="password" type="password" placeholder="Password">
             </div>
             <div class="submit">
                 <button id ="submit" type="submit" >Ingresar</button>
             </div>
+            <div class="forget-pwd">
+                <a href="/forgot-password">¿Has olvidado la contraseña?</a>
+            </div>
         </form>
-        <p class="register-redirect">¿Aún no tienes una cuenta?<a href="/register">¡Registrate!</a></p>
+        <p class="register-redirect">¿Aún no tienes una cuenta? <a href="/register">¡Registrate!</a></p>
     </div>
     <div class="resultado container"></div>
     <script src="js/login.js"></script>

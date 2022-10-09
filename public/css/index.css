@@ -2,22 +2,37 @@ body{
     background: #ddd !important;
 }
 
-nav{
-    height: 50px;
-    background-color: rgb(100, 160, 210);
+.titulo{
+    margin-top: 50px;
+}
+
+h1{
+    font-weight: 1000;
+    color: rgb(100, 160, 210);
+    text-align: center;
+}
+
+.titulo p{
+    text-align: center;
+    font-weight: 500;
+    font-size: 22px;
+    padding-top: 0px;
+    color: white;
 }
 
 .cuerpo{
     background-color: #fff;
-    margin: 50px;
+    margin: 60px;
     max-width: 600px !important;
     border-radius: 10px;
     box-shadow: 0px 0px 10px black;
 }
 
-.titulo{
+.titulo-cuerpo{
+    font-size: 18px;
     text-align: center;
-    padding-top: 20px;
+    padding: 20px;
+    padding-top: 40px
 }
 
 .ingresar{
@@ -26,8 +41,27 @@ nav{
 
 #login, #registrarse{
     margin: 30px;
-    padding: 10px;;
+    margin-bottom: 50px;
+    padding: 10px;
     flex-grow: 1;
     border: none;
     border-radius: 5px;
+    font-weight: bolder;
+    color: white;
+}
+
+#login{
+    background-color: rgb(100, 160, 210);;
+}
+
+#registrarse{
+    background-color: #40dd40 ;
+}
+
+#login:hover{
+    box-shadow: 0px 0px 5px rgb(100, 160, 210);
+}
+
+#registrarse:hover{
+    box-shadow: 0px 0px 5px #40dd40;
 }

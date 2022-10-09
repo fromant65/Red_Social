@@ -10,21 +10,19 @@
 </head>
 <body>
     <div class="container form-container">
-        <h2 class="titulo">Ingresa tus datos para registrarte.</h2>
+        <h2 class="titulo">Ingresa tus datos para registrarte</h2>
         <form id="register" action="register" method="post">
             <div class="user-div">
-                <label class="label-user" for="username">Nombre de usuario</label>
-                <input id="username" name="username" type="text">
+                <input id="username" name="username" type="text" placeholder="Username">
             </div>
             <div class="pwd-div">
-                <label class="label-pwd" for="password">Password</label>
-                <input id="password" name="password" type="password">
+                <input id="password" name="password" type="password" placeholder="Password">
             </div>
             <div class="submit">
                 <button id ="submit" type="submit" >Registrarse</button>
             </div>
         </form>
-        <p class="login-redirect">¿Ya tienes una cuenta?<a href="/login">¡Logueate!</a></p>
+        <p class="login-redirect">¿Ya tienes una cuenta? <a href="/login">¡Logueate!</a></p>
     </div>
     <div class="resultado container"></div>
     <script src="js/register.js"></script>

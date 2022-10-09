@@ -13,14 +13,14 @@
 </head>
 
 <body>
-    <div class="row">
+    <div class="row page">
         <div class="col-4 aside-filler"></div> <!--Filler para el aside-->
         <aside class="col-4">
             <div>
-                <a href="#" class="active"><i class="fa-regular fa-book"> </i><p>Texbook</p></a>
+                <a href=""><i class="fa-solid fa-book"></i><p>Texbook</p></a>
             </div>
             <div>
-                <a href="#"><i class="fa-regular fa-user"></i><p>Perfil</p></a>
+                <a href="/profile"><i class="fa-solid fa-user"></i><p>Perfil</p></a>
             </div>
             <div>
                 <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Finalizar sesión</p></a>
@@ -28,7 +28,6 @@
         </aside>
         <section class="col">
             <form class="crear-publicacion" action="" method="post">
-                <label for="publicacion">Inicio</label>
                 <textarea name="publicacion" id="publicacion" class="publicacion" cols="30" rows="2" placeholder="¿Qué estás pensando?"></textarea>
                 <div class="submit-container">
                     <input type="submit" class="publicar" value="Publicar">
@@ -39,8 +38,7 @@
             <div class="cargar-mas-container">
                 <button class="cargar-mas">Cargar más publicaciones</button>
                 <div class="cargando-hidden"></div>
-            </div>
-            
+            </div>    
         </section>
     </div>
     <script src="js/home.js"></script>
