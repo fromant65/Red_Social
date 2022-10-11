@@ -5,53 +5,6 @@ body{
 .page{
     width: 100vw;
 }
-/*Aside*/
-
-.aside-filler{
-    max-width: 250px !important;
-}
-
-aside{
-    height: 100vh;
-    border-right: 1px solid #ddd;
-    box-shadow: 0px 0x 5px #222;
-    max-width: 250px !important;
-    position:fixed;
-}
-
-aside div{
-    padding: 10px;
-    padding-left: 20px;
-    color: rgb(100, 160, 210);
-    font-weight: bold;
-    font-size: 18px;
-}
-
-aside div a i, aside div a p{
-    color:rgb(100, 160, 210);
-    display: inline;
-}
-
-aside div a{
-    text-decoration: none;
-}
-
-aside div a i{
-    padding-right: 5px;
-}
-
-aside div:hover{
-    color: rgb(20, 20, 20);
-}
-
-@media screen and (max-width: 650px) {
-    aside div a p{
-        display:none;
-    }
-    aside, .aside-filler{
-        width: 65px !important;
-    }
-}
 
 /* Crear publicaciones*/
 

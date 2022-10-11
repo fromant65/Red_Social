@@ -21,4 +21,10 @@ router.get('/logout',(req,res) => {
     res.redirect('/');
 });
 
+router.get('/config', (req,res)=>{
+    let session = req.session;
+    if(session.userid) res.sendFile(path.join(__dirname, '..', 'views', 'config.html'));
+    else res.redirect('/login');
+})
+
 module.exports = router

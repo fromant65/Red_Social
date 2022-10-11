@@ -9,6 +9,7 @@
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/aside.css">
     <title>Home</title>
 </head>
 
@@ -23,8 +24,12 @@
                 <a href="/profile"><i class="fa-solid fa-user"></i><p>Perfil</p></a>
             </div>
             <div>
+                <a href="/config"><i class="fa-solid fa-key"></i><p>Configuraciones</p></a>
+            </div>
+            <div>
                 <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Finalizar sesión</p></a>
             </div>
+            
         </aside>
         <section class="col">
             <form class="crear-publicacion" action="" method="post">
@@ -42,13 +47,12 @@
             </div>    
         </section>
     </div>
-    <script src="js/home.js"></script>
     <script src="js/getUserId.js"></script>
     <script src="js/getPostId.js"></script>
-    <script src="js/publicar.js"></script>
-    <script src="js/publicacionLikes.js"></script>
-    <script src="js/publicacionComentarios.js"></script>
-    <script src="js/cargarPublicaciones.js"></script>
+    <script src="js/home/publicar.js"></script>
+    <script src="js/home/publicacionLikes.js"></script>
+    <script src="js/home/publicacionComentarios.js"></script>
+    <script src="js/home/cargarPublicaciones.js"></script>
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
