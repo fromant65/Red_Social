@@ -166,6 +166,82 @@ aside div:hover{
     }
 }
 
+/*Comentarios*/
+
+.comentarios-visibles{
+    background: rgb(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    transition: opacity 0.5s;
+}
+
+.comentarios-div-general{
+    
+    background-color: white;
+    border:none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px #888;
+    margin:auto;
+    padding: 20px;
+    max-width: 600px;
+    max-height: calc(100vh - 200px);
+    margin-top: 100px;
+    margin-bottom: 100px;
+    overflow: auto;
+}
+
+.cerrar-comentarios-container button{
+    border:none;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.comentarios-div-general form{
+    border-top: 1px solid #ddd;
+    padding:10px;
+    margin: 10px;
+}
+
+.comments-container{
+    border-left: 1px solid #ddd;
+}
+
+.comment-container{
+    background-color: #eee;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;   
+}
+
+.comment-user{
+    font-weight: bold;
+}
+
+.comment-date{
+    margin-left: 10px;
+}
+
+.comment-content{
+    border-left: 1px solid #aaa;
+    padding-left: 10px;
+}
+
+.input-comment{
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.send-comment{
+    margin-left: 10px;
+    border:none;
+    border-radius: 5px;
+}
+
 /*Cargar mas publicaciones*/
 
 .cargar-mas-container{

@@ -34,4 +34,8 @@ router.post('/like', postController.handleLike);
 
 router.post('/getlikes', postController.getLikes);
 
+router.post('/getcomentarios', postController.getComentarios)
+
+router.post('/comentar', postController.handleNewComment)
+
 module.exports = router;

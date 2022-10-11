@@ -1,26 +1,3 @@
-const getPostId = async (publicacion)=>{
-    const user= publicacion.user;
-    const content= publicacion.content;
-    const date= new Date(publicacion.date);
-    //console.log(user, date, content);
-    const res = await fetch(`${location}/postId`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "user": user,
-            "date": date,
-            "content": content
-        })
-    })
-    const data = await res.json();
-    postId = data.success._id;
-    //console.log(data.success._id);
-    return postId;
-}
-
 const darLike = async (publicacion)=>{
     /*Procedimiento a seguir al dar un like
     Para que el like quede registrado, se agrega al Post un atributo que sea un array de usuarios
@@ -49,6 +26,7 @@ const darLike = async (publicacion)=>{
 }
 
 const cargarLikes = async (publicacion)=>{
+    //Esta funcion obtiene la cantidad de likes de una publicación y la retorna
     const postId =  await getPostId(publicacion)
     const resLikes = await fetch(`${location}/getlikes`, {
         method: 'POST',
@@ -61,10 +39,6 @@ const cargarLikes = async (publicacion)=>{
         })
     })
     const likes = await resLikes.json();
-    //console.log(likes.likes);
     return likes.likes;
 }
 
-const abrirComentarios = ()=>{
-    console.log("Comentarios");
-}

@@ -20,6 +20,7 @@ const formatearFecha = (date)=>{
 }
 
 const styleLikes = (publicacion, botonLike)=>{
+    //Esta funcion se encarga de darle estilo a los likes de una publicación
     cargarLikes(publicacion).then(async likes =>{
         let userId = await getUserId();
         let heart = likes.filter(user => user==userId.session.userid).length===0?'regular':'solid'
@@ -51,7 +52,6 @@ const createPublicationCode = (publicacion) =>{
 
     styleLikes(publicacion, botonLike)
     botonComentario.innerHTML = '<i class="fa-regular fa-comment"> </i><p>Comentar</p>';
-    
 
     botonLike.addEventListener('click', async ()=>{
         await darLike(publicacion);
@@ -59,7 +59,8 @@ const createPublicationCode = (publicacion) =>{
     })
 
     botonComentario.addEventListener('click', ()=>{
-        abrirComentarios();
+        const comentarios = getComentarios(publicacion);
+        getPostId(publicacion).then(id=>cargarComentarios(comentarios,id));
     })
     //Las funciones darLike y abrirComentarios estarán en publicacionAcciones.js
     
