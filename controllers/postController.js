@@ -41,8 +41,8 @@ const getPostId= async (req,res)=>{
     try{
         const result = await Post.findOne({
             'user': user, 
-            'content': content
-            //,'date': date //La fecha está mal formateada asi que todavía no la tendremos en cuenta
+            'content': content,
+            'date': date //La fecha está mal formateada asi que todavía no la tendremos en cuenta
         })
         res.status(201).json({'success': result});
     }catch(err){
