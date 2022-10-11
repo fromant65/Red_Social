@@ -19,6 +19,14 @@ const formatearFecha = (date)=>{
     return `${date_}/${month_}/${year_}, ${hours_}:${minutes_}.`;
 }
 
+const styleLikes = (publicacion, botonLike)=>{
+    cargarLikes(publicacion).then(async likes =>{
+        let userId = await getUserId();
+        let heart = likes.filter(user => user==userId.session.userid).length===0?'regular':'solid'
+        botonLike.innerHTML = `<i class="fa-${heart} fa-heart"> </i><p class="cant-likes">${likes.length} </p><p>Like${likes.length==1?'':'s'}</p>`;
+    });
+}
+
 const createPublicationCode = (publicacion) =>{
     //Esta funcion crea la estructura html de una publicación y la devuelve en un div container
     const user = publicacion.user;
@@ -27,34 +35,45 @@ const createPublicationCode = (publicacion) =>{
     const date = formatearFecha(fechaPublicacion);
 
     const container = document.createElement("DIV");
-    const comentarios = document.createElement("DIV");
+    const acciones = document.createElement("DIV");
     const usuario = document.createElement("H3");
     const contenido = document.createElement("P");
     const fecha = document.createElement("P");
-    const btnComentario = document.createElement("INPUT");
-    const btnEnviar = document.createElement("INPUT");
+    const botonLike = document.createElement("button");
+    const botonComentario = document.createElement("button");
     
     container.classList.add("publicacion-cargada");
     fecha.classList.add('publicacion-fecha');
     contenido.classList.add('publicacion-contenido')
-    comentarios.classList.add("comentarios");
-    btnComentario.classList.add("comentario");
-    btnEnviar.classList.add("comentario-enviar");
+    acciones.classList.add("publicacion-acciones");
+    botonLike.classList.add("acciones-like");
+    botonComentario.classList.add("acciones-comentario");
 
-    btnEnviar.type = "submit";
-    btnComentario.setAttribute("placeholder", "Introduce tu comentario");
+    styleLikes(publicacion, botonLike)
+    botonComentario.innerHTML = '<i class="fa-regular fa-comment"> </i><p>Comentar</p>';
+    
+
+    botonLike.addEventListener('click', async ()=>{
+        await darLike(publicacion);
+        styleLikes(publicacion, botonLike)   
+    })
+
+    botonComentario.addEventListener('click', ()=>{
+        abrirComentarios();
+    })
+    //Las funciones darLike y abrirComentarios estarán en publicacionAcciones.js
     
     usuario.textContent = user;
     contenido.textContent = content;
     fecha.textContent = date;
 
-    comentarios.appendChild(btnComentario);
-    comentarios.appendChild(btnEnviar);
+    acciones.appendChild(botonLike);
+    acciones.appendChild(botonComentario);
 
     container.appendChild(usuario);
     container.appendChild(fecha);
     container.appendChild(contenido);
-    container.appendChild(comentarios);
+    container.appendChild(acciones);
 
     return container;
 }

@@ -14,7 +14,13 @@ const postSchema = new Schema({
         type: Date,
         default: Date.now,
         required: true
-    }
+    },
+    likes: [String],
+    comments: [{
+        user: {type: String, required: true},
+        content: {type: String, required: true},
+        date:{type: Date, default: Date.now, required: true}
+    }]
 });
 
 module.exports = mongoose.model('Post', postSchema);

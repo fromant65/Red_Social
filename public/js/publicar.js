@@ -25,10 +25,8 @@ publicacion.addEventListener('input',  (e)=>{
 
 publicar.addEventListener("click", async(e)=>{
     e.preventDefault();
-    //Obtenemos la data de la sesión 
-    //(donde se encuentra el id de usuario con el que identificaremos quién hizo la publicación)
-    const request = await fetch(`${location}/publicar`);
-    const data = await request.json();
+    const data = await getUserId();
+    console.log(data);
     const fechaPublicacion = new Date();
     //Hacemos la publicación
     fetch(`${location}/publicar`, {

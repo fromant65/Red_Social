@@ -135,32 +135,35 @@ aside div:hover{
     padding-left: 10px;
 }
 
-.comentario{
-    border: none;
-    border: 1px solid #ddd;
-    padding: 10px;
+.publicacion-acciones{
+    width: 100%;
+
+    border-top: 1px solid #ddd;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.acciones-comentario, .acciones-like{
+    color:rgb(100, 160, 210);
+    border:none;
+    outline:none;
     border-radius: 5px;
+    font-weight: 400;
+    margin: 5px;
+    padding: 15px;
+    flex-grow: 1;
 }
 
-.comentario:focus{
-    outline: none;
-    box-shadow: 0px 0px 2px rgb(100, 160, 210);
-}
-
-.comentario-enviar{
-    border: none;
-    padding: 10px;
+.publicacion-acciones button p{
+    display: inline;
     margin-left: 10px;
-    background-color: #eee;
-    border-radius: 5px;
 }
 
-.comentario-enviar:hover{
-    background-color: rgb(140, 200, 250)   
-}
-
-.comentario-enviar:focus{
-    outline: none;
+@media screen and (max-width: 650px) {
+    .publicacion-acciones button p{
+        display:none;
+    }
 }
 
 /*Cargar mas publicaciones*/

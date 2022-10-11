@@ -12,9 +12,9 @@ router.get('/', (req,res)=>{
     else res.redirect('/login'); 
 })
 
-//Si pedimos la ruta publicar, quiere decir que hemos hecho una publicación. 
+//Si pedimos la ruta getId, quiere decir que hemos solicitado la id del usuario. 
 //Devolvemos la sesion para que el frontend se encargue de hacer un fetch con los datos de la publicación
-router.get('/publicar', (req,res)=>{
+router.get('/getUserId', (req,res)=>{
     let session = req.session;
     if(session.userid) res.json({session});
     else res.redirect('/login');
@@ -26,5 +26,12 @@ router.post('/publicar', postController.handleNewPost);
 //Si hacemos un post request a /home/publicaciones, 
 //deberemos manejar el pedido para mostrar publicaciones desde el controlardor
 router.post('/publicaciones', postController.showPosts)
+
+//Si hacemos un post request a /home/
+router.post('/postId', postController.getPostId);
+
+router.post('/like', postController.handleLike);
+
+router.post('/getlikes', postController.getLikes);
 
 module.exports = router;
