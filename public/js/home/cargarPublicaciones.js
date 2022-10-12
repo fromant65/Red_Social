@@ -72,7 +72,7 @@ const createPublicationCode = (publicacion) =>{
         }else{
             getPostId(publicacion).then(id=>{
                 container.id = id;
-                generarPublicacionOpciones(id);
+                generarPublicacionOpciones(id, opciones);
             })
             opciones.classList.add('publicacion-opciones-abierto')
         }

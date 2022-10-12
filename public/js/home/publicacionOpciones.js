@@ -15,8 +15,8 @@ const matchAutorPublicacion = async(id)=>{
     return data.match //El fetch devuelve un json que tiene un atributo match que es true o false
 }
 
-const generarPublicacionOpciones = async(id)=>{
-    const opciones = document.querySelector('.publicacion-opciones');
+const generarPublicacionOpciones = async(id, div)=>{
+    const opciones = div;
     const opcionesContainer = document.createElement('div');
     if(await matchAutorPublicacion(id)) {
         const eliminarPost = document.createElement('div');
