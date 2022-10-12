@@ -25,8 +25,7 @@ publicacion.addEventListener('input',  (e)=>{
 
 publicar.addEventListener("click", async(e)=>{
     e.preventDefault();
-    const data = await getUserId();
-    console.log(data);
+    const user = await getUserId();
     const fechaPublicacion = new Date();
     //Hacemos la publicación
     fetch(`${location}/publicar`, {
@@ -36,7 +35,7 @@ publicar.addEventListener("click", async(e)=>{
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "user": data.session.userid,
+            "user": user,
             "content": publicacion.value,
             "date": fechaPublicacion
         })

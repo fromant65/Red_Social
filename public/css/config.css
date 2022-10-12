@@ -1,0 +1,47 @@
+h1{
+    width:100%;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    color:rgb(90,150,200);
+    font-weight: bolder;
+    text-align: center;
+}
+
+section .config{
+    margin:20px;
+    padding: 10px;
+    border-left: 1px solid #ddd;
+}
+
+.config h2{
+    margin: 10px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+input{
+    display: block;
+    margin:20px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+input:focus{
+    outline: none;
+    box-shadow: 0px 0px 2px rgb(100,160,210);
+}
+
+.warning-active{
+    padding-left: 30px;
+    color: rgb(255, 65, 65);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.success-active{
+    padding: 20px;
+    color: rgb(65, 255, 65);
+    font-weight: bold;
+    font-size: 18px;
+}

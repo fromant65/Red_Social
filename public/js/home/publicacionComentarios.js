@@ -106,8 +106,7 @@ const realizarComentario = async (e)=>{
     e.preventDefault();
     const input = document.querySelector('.input-comment');
     const content = input.value;
-    const session = await getUserId();
-    const user = session.session.userid;
+    const user = await getUserId();
     const date = new Date();
     const postId = input.getAttribute('postId');
     fetch(`${location}/comentar`, {

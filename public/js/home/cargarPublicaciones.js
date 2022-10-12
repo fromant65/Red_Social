@@ -23,7 +23,7 @@ const styleLikes = (publicacion, botonLike)=>{
     //Esta funcion se encarga de darle estilo a los likes de una publicación
     cargarLikes(publicacion).then(async likes =>{
         let userId = await getUserId();
-        let heart = likes.filter(user => user==userId.session.userid).length===0?'regular':'solid'
+        let heart = likes.filter(user => user==userId).length===0?'regular':'solid'
         botonLike.innerHTML = `<i class="fa-${heart} fa-heart"> </i><p class="cant-likes">${likes.length} </p><p>Like${likes.length==1?'':'s'}</p>`;
     });
 }
@@ -42,6 +42,7 @@ const createPublicationCode = (publicacion) =>{
     const fecha = document.createElement("P");
     const botonLike = document.createElement("button");
     const botonComentario = document.createElement("button");
+    const opciones = document.createElement('div');
     
     container.classList.add("publicacion-cargada");
     fecha.classList.add('publicacion-fecha');
@@ -49,6 +50,7 @@ const createPublicationCode = (publicacion) =>{
     acciones.classList.add("publicacion-acciones");
     botonLike.classList.add("acciones-like");
     botonComentario.classList.add("acciones-comentario");
+    opciones.classList.add('publicacion-opciones');
 
     styleLikes(publicacion, botonLike)
     botonComentario.innerHTML = '<i class="fa-regular fa-comment"> </i><p>Comentar</p>';
@@ -64,9 +66,23 @@ const createPublicationCode = (publicacion) =>{
     })
     //Las funciones darLike y abrirComentarios estarán en publicacionAcciones.js
     
+    opciones.addEventListener('click', ()=>{
+        if(opciones.classList.contains('publicacion-opciones-abierto')){
+            opciones.classList.remove('publicacion-opciones-abierto')
+        }else{
+            getPostId(publicacion).then(id=>{
+                container.id = id;
+                generarPublicacionOpciones(id);
+            })
+            opciones.classList.add('publicacion-opciones-abierto')
+        }
+
+    })
+
     usuario.textContent = user;
     contenido.textContent = content;
     fecha.textContent = date;
+    opciones.innerHTML = '<i class="fa-solid fa-ellipsis"></i>';
 
     acciones.appendChild(botonLike);
     acciones.appendChild(botonComentario);
@@ -74,6 +90,7 @@ const createPublicationCode = (publicacion) =>{
     container.appendChild(usuario);
     container.appendChild(fecha);
     container.appendChild(contenido);
+    container.appendChild(opciones)
     container.appendChild(acciones);
 
     return container;

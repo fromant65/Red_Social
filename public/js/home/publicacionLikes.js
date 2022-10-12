@@ -20,7 +20,7 @@ const darLike = async (publicacion)=>{
         },
         body: JSON.stringify({
             "postid": postId,
-            "userid": userId.session.userid            
+            "userid": userId           
         })
     })
 }

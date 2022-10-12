@@ -131,4 +131,41 @@ const handleNewComment = async (req, res) => {
     }
 }
 
-module.exports = { handleNewPost, showPosts, getPostId, handleLike, getLikes, getComentarios, handleNewComment };
+const matchAutores = async (req,res)=>{
+    const postid = req.body.postid;
+    const userid = req.body.userid;
+    try{
+        const post = await Post.findById(postid).exec();
+        if(post.user === userid) res.json({match:true})
+        else res.json({match:false});
+    }catch(err){
+        res.status(500).json({'message': err.message});
+    }
+    
+}
+
+const deletePost = async(req,res)=>{
+    const postid = req.body.postid;
+    try{
+        const post = await Post.findById(postid).exec();
+        Post.findOneAndDelete({_id: postid }, (err, docs) =>{
+            if (err) {res.json({'message':err})
+            console.log(err, docs);}
+            else res.json({'success': 'The post has been deleted'})
+        });
+    }catch(err){
+        res.status(500).json({'message': err})
+    }
+}
+
+module.exports = { 
+    handleNewPost, 
+    showPosts, 
+    getPostId, 
+    handleLike, 
+    getLikes, 
+    getComentarios, 
+    handleNewComment, 
+    matchAutores,
+    deletePost
+ };

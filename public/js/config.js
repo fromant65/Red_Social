@@ -8,8 +8,10 @@ const changePasswordResult= document.querySelector(".change-password-result");
 
 newPass2.addEventListener('input', ()=>{
     if(newPass2.value !== newPass1.value){
+        warningNewPasswords.classList.add('warning-active')
         warningNewPasswords.innerHTML = "Las contraseñas deben coincidir";
     }else{
+        warningNewPasswords.classList.remove('warning-active')
         warningNewPasswords.innerHTML = "";
     }
 });
@@ -30,6 +32,7 @@ submitNewPass.addEventListener('click', async(e)=>{
     const dataCheck = await response.json();
     console.log(dataCheck);
     if(dataCheck.res === false){
+        warningCurrentPassword.classList.add('warning-active');
         warningCurrentPassword.innerHTML = "La contraseña ingresada no coincide con la de la cuenta";
     }
     if(dataCheck.res === true && newPass1.value === newPass2.value){
@@ -46,7 +49,14 @@ submitNewPass.addEventListener('click', async(e)=>{
         })
         const data = await response.json();
         console.log(data);
-        if(data.success) changePasswordResult.innerHTML = "Se ha modificado la contraseña correctamente";
-        else changePasswordResult.innerHTML = `Ha ocurrido un error al modificar la contraseña: ${data.error}`;
+        if(data.success) {
+            changePasswordResult.innerHTML = "Se ha modificado la contraseña correctamente";
+            changePasswordResult.classList.add('success-active')
+            warningCurrentPassword.classList.remove('warning-active');
+        }
+        else {
+            changePasswordResult.classList.add('warning-active')
+            changePasswordResult.innerHTML = `Ha ocurrido un error al modificar la contraseña: ${data.error}`;
+        }
     }
 })
