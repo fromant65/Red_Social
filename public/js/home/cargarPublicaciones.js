@@ -82,15 +82,15 @@ const createPublicationCode = (publicacion) =>{
     usuario.textContent = user;
     contenido.textContent = content;
     fecha.textContent = date;
-    opciones.innerHTML = '<i class="fa-solid fa-ellipsis"></i>';
+    opciones.innerHTML = '<div><i class="fa-solid fa-ellipsis"></i></div>';
 
     acciones.appendChild(botonLike);
     acciones.appendChild(botonComentario);
 
+    container.appendChild(opciones)
     container.appendChild(usuario);
     container.appendChild(fecha);
     container.appendChild(contenido);
-    container.appendChild(opciones)
     container.appendChild(acciones);
 
     return container;

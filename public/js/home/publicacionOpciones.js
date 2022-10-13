@@ -21,8 +21,10 @@ const generarPublicacionOpciones = async(id, div)=>{
     //Esta funcion genera el menu de opciones de una publicación
     const opciones = div;
     const opcionesContainer = document.createElement('div');
+    opcionesContainer.classList.add('opciones-menu')
+
     if(await matchAutorPublicacion(id)) {
-        const eliminarPost = document.createElement('div');
+        const eliminarPost = document.createElement('button');
         eliminarPost.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar publicación.'
         eliminarPost.addEventListener('click', async ()=>{
             const response = await fetch(`${location}/eliminar-post`, {
