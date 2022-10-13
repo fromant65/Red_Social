@@ -1,4 +1,6 @@
 const matchAutorPublicacion = async(id)=>{
+    //Esta funcion determina si el que intenta abrir las opciones de la publicación y su autor
+    //son la misma persona
     const userid = await getUserId();
     const response = await fetch(`${location}/match-autores`, {
         method: 'POST',
@@ -16,6 +18,7 @@ const matchAutorPublicacion = async(id)=>{
 }
 
 const generarPublicacionOpciones = async(id, div)=>{
+    //Esta funcion genera el menu de opciones de una publicación
     const opciones = div;
     const opcionesContainer = document.createElement('div');
     if(await matchAutorPublicacion(id)) {

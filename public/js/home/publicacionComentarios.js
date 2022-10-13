@@ -2,7 +2,7 @@ const comentarios = document.querySelector(".comentarios");
 
 const getComentarios = async (publicacion)=>{
     /*Procedimiento para cargar comentarios
-    Debido a que los comentarios están dentro de la data de la publicación,
+    Debido a que los comentarios están dentro de la data de la publicación en la DB,
     debemos hacer un fetch con la id de la publicación 
     y mostrar una ventana sobre la página con los comentarios.
     El fetch nos devuelve la lista de comentarios y los creamos como una publicación
@@ -28,6 +28,7 @@ const killComments = ()=>{
 };
 
 const cargarComentarios = async (_comentarios, postId)=>{
+    //Esta funcion crea el codigo HTML para la sección de comentarios
     const objComentarios = await _comentarios;
     const arrayComentarios = objComentarios.comentarios;
     const documentFragment = document.createDocumentFragment();
@@ -74,6 +75,7 @@ const cargarComentarios = async (_comentarios, postId)=>{
 }
 
 const crearComentario =  (comentario)=>{
+    //Esta funcion crea el HTML para un comentario específico
     const user = comentario.user?comentario.user:'undefined';
     const content = comentario.content;
     const date = new Date(comentario.date);
@@ -103,6 +105,7 @@ const crearComentario =  (comentario)=>{
 }
 
 const realizarComentario = async (e)=>{
+    //Esta funcion se encarga de postear un comentario
     e.preventDefault();
     const input = document.querySelector('.input-comment');
     const content = input.value;
