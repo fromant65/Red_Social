@@ -1,5 +1,7 @@
 const user = document.getElementById('username');
 const pwd = document.getElementById('password');
+const mail = document.getElementById('email');
+const fname = document.getElementById('fullname');
 const submit = document.getElementById("submit");
 const resultado = document.querySelector(".resultado");
 
@@ -39,6 +41,8 @@ submit.addEventListener('click', (e)=>{
     e.preventDefault();
     const username = user.value;
     const password = pwd.value;
+    const email = mail.value;
+    const fullname = fname.value;
     fetch(location, {
         method: 'POST',
         headers: {
@@ -47,7 +51,9 @@ submit.addEventListener('click', (e)=>{
         },
         body: JSON.stringify({
             "username": username,
-            "password": password
+            "password": password,
+            "email": email,
+            "fullname" : fullname
         })
     }).then(response => response.json())
     .then(data => {

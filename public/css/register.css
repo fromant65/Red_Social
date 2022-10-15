@@ -15,16 +15,12 @@ body{
     padding: 20px;
 }
 
-.user-div, .pwd-div{
+.user-div, .pwd-div, .email-div, .fullname-div{
     display: flex;
     margin:10px
 }
 
-.label-user, .label-pwd{
-    width: 200px;
-}
-
-#username, #password{
+#username, #password, #email, #fullname{
     border:none;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -32,7 +28,7 @@ body{
     flex-grow: 1;
 }
 
-#username:focus, #password:focus{
+#username:focus, #password:focus, #email:focus, #fullname:focus{
     outline: none;
     box-shadow: 0px 0px 5px rgb(100, 160, 210);   
 }

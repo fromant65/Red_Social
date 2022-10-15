@@ -30,7 +30,7 @@ submitNewPass.addEventListener('click', async(e)=>{
         })
     })
     const dataCheck = await response.json();
-    console.log(dataCheck);
+    //console.log(dataCheck);
     if(dataCheck.res === false){
         warningCurrentPassword.classList.add('warning-active');
         warningCurrentPassword.innerHTML = "La contraseña ingresada no coincide con la de la cuenta";
@@ -48,7 +48,7 @@ submitNewPass.addEventListener('click', async(e)=>{
             })
         })
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         if(data.success) {
             changePasswordResult.innerHTML = "Se ha modificado la contraseña correctamente";
             changePasswordResult.classList.add('success-active')
