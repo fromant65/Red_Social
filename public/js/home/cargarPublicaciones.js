@@ -5,8 +5,9 @@ const PRIMERA_FECHA = new Date('2022-10-04T17:00:00.000+00:00');
 
 //Div donde se mostrarán las publicaciones
 const publicaciones= document.querySelector(".publicaciones");
-//Bototn para cargar publicaciones más antiguas
+//Boton para cargar publicaciones más antiguas
 const cargarMas= document.querySelector(".cargar-mas");
+//Rueda de carga - Hidden por default
 const cargando = document.querySelector(".cargando-hidden");
 
 const formatearFecha = (date)=>{
@@ -35,6 +36,7 @@ const createPublicationCode = (publicacion) =>{
     const fechaPublicacion = new Date(publicacion.date);
     const date = formatearFecha(fechaPublicacion);
 
+    //Elementos HTML
     const container = document.createElement("DIV");
     const acciones = document.createElement("DIV");
     const usuario = document.createElement("H3");
@@ -44,6 +46,7 @@ const createPublicationCode = (publicacion) =>{
     const botonComentario = document.createElement("button");
     const opciones = document.createElement('div');
     
+    //Clases
     container.classList.add("publicacion-cargada");
     fecha.classList.add('publicacion-fecha');
     contenido.classList.add('publicacion-contenido')
@@ -52,9 +55,11 @@ const createPublicationCode = (publicacion) =>{
     botonComentario.classList.add("acciones-comentario");
     opciones.classList.add('publicacion-opciones');
 
+    //Estilos
     styleLikes(publicacion, botonLike)
     botonComentario.innerHTML = '<i class="fa-regular fa-comment"> </i><p>Comentar</p>';
 
+    //Event listeners
     botonLike.addEventListener('click', async ()=>{
         await darLike(publicacion);
         styleLikes(publicacion, botonLike)   
@@ -79,11 +84,13 @@ const createPublicationCode = (publicacion) =>{
 
     })
 
+    //Contenido
     usuario.textContent = user;
     contenido.textContent = content;
     fecha.textContent = date;
     opciones.innerHTML = '<div><i class="fa-solid fa-ellipsis"></i></div>';
 
+    //Añadir elementos a sus respectivos parents
     acciones.appendChild(botonLike);
     acciones.appendChild(botonComentario);
 
@@ -145,19 +152,23 @@ const ocultarRuedaCarga = ()=>{
 const crearPublicaciones = content =>{
     const documentFragment=document.createDocumentFragment();
     for(let i=content.length-1; i>=0;i--){
-        //console.log(contenido[contador])
         const newPublication = createPublicationCode(content[i]);
         documentFragment.appendChild(newPublication)
-        if(i==content.lenght-1) observer.observe(newPublication)
+        //if(i==content.lenght-1) observer.observe(newPublication)
     }
     publicaciones.appendChild(documentFragment);
 }
 
+/*
+Para que el setHours no tenga que coincidir con el del Postcontroller
+lo que se puede hacer es incluir la cantidad de horas directamente 
+en el fetch de cargarPublicaciones (y en la llamada a la funcion)
+*/
 const cargarPublicaciones= async fecha=>{
     const content = await fetchPublicaciones(fecha);
     let newFecha = new Date(await fecha);
     //Seteamos la nueva fecha a una hora antes para que busque publicaciones más antiguas
-    //Este setHours tiene que coincidir con el del postController
+    //Este setHours tiene que coincidir con el del postController en el backend
     newFecha.setHours(newFecha.getHours()-1);
     
     //Si el fetch no encontró publicaciones y llegamos a PRIMERA_FECHA
@@ -168,8 +179,8 @@ const cargarPublicaciones= async fecha=>{
         publicaciones.appendChild(endOfFile);
         return PRIMERA_FECHA;
     }
-    //Si el fetch no encontró resultados pero no estamos en la primera fecha, seguimos buscando
     if(!content.length){
+        //Si el fetch no encontró resultados pero no estamos en la primera fecha, seguimos buscando
         mostrarRuedaCarga();
         return cargarPublicaciones(newFecha);
     }else{

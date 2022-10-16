@@ -35,6 +35,11 @@ submitNewPass.addEventListener('click', async(e)=>{
         warningCurrentPassword.classList.add('warning-active');
         warningCurrentPassword.innerHTML = "La contraseña ingresada no coincide con la de la cuenta";
     }
+    if(passActual.value === newPass1.value && newPass1.value === newPass2.value){
+        warningNewPasswords.classList.add('warning-active')
+        warningNewPasswords.innerHTML = "Las nueva contraseña y la actual deben ser distintas";
+        return;
+    } 
     if(dataCheck.res === true && newPass1.value === newPass2.value){
         //Update password
         const response = await fetch(`${location}/update-password`, {
@@ -52,6 +57,7 @@ submitNewPass.addEventListener('click', async(e)=>{
         if(data.success) {
             changePasswordResult.innerHTML = "Se ha modificado la contraseña correctamente";
             changePasswordResult.classList.add('success-active')
+            warningNewPasswords.classList.remove('warning-active')
             warningCurrentPassword.classList.remove('warning-active');
         }
         else {
