@@ -10,9 +10,14 @@ const getUserInfo = async (req,res)=>{
 
 /*Funcion para obtener los posts de determinado usuario*/
 const getUserPosts = async (req,res)=>{
-
+    const userid = req.session.userid;
+    Post.find({ user: userid }).lean().exec((err, posts) => {
+        if (!posts) res.status(204);
+        return res.status(200).json(posts);
+    });
 }
 
 module.exports = {
-    getUserInfo
+    getUserInfo,
+    getUserPosts
 }

@@ -4,7 +4,7 @@ const getPostId = async (publicacion)=>{
     const content= publicacion.content;
     const date= new Date(publicacion.date);
     //console.log(user, date, content);
-    const res = await fetch(`${location}/postId`, {
+    const res = await fetch(`home/postId`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

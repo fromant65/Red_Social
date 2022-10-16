@@ -8,7 +8,7 @@ const getComentarios = async (publicacion)=>{
     El fetch nos devuelve la lista de comentarios y los creamos como una publicación
      */
     const postId = await getPostId(publicacion);
-    const resComentarios = await fetch(`${location}/getcomentarios`, {
+    const resComentarios = await fetch(`home/getcomentarios`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -112,7 +112,7 @@ const realizarComentario = async (e)=>{
     const user = await getUserId();
     const date = new Date();
     const postId = input.getAttribute('postId');
-    fetch(`${location}/comentar`, {
+    fetch(`home/comentar`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

@@ -36,4 +36,6 @@ router.get('/profile', (req,res)=>{
 
 router.get('/user-info', profileController.getUserInfo)
 
+router.get('/user-publicaciones', profileController.getUserPosts)
+
 module.exports = router
