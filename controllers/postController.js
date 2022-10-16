@@ -1,8 +1,8 @@
 const Post = require('../model/Post')
+const {verifySession} = require('./verifySession');
 
 const handleNewPost = async (req, res) => {
-    let session = req.session
-    if (!session.userid) res.redirect('/login');
+    verifySession(req);
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -19,8 +19,7 @@ const handleNewPost = async (req, res) => {
 }
 
 const showPosts = (req, res) => {
-    let session = req.session
-    if (!session.userid) res.redirect('/login');
+    verifySession(req);
     const lastDate = req.body.lastPostDate;
     const firstDate = new Date(lastDate);
     firstDate.setHours(firstDate.getHours() - 1);
@@ -33,8 +32,7 @@ const showPosts = (req, res) => {
 }
 
 const getPostId = async (req, res) => {
-    let session = req.session
-    if (!session.userid) res.redirect('/login');
+    verifySession(req);
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -51,11 +49,12 @@ const getPostId = async (req, res) => {
 }
 
 const handleLike = async (req, res) => {
+    verifySession(req);
     const userid = req.body.userid;
     const postid = req.body.postid;
     const post = await Post.findById(postid).exec();
     if (post == null) {
-        res.status(500).json({ 'message': 'Post not found' })
+        res.status(404).json({ 'message': 'Post not found' })
     }
     if (!post.likes.filter(_userid => _userid == userid).length) {
         //Si el atributo likes no tiene dentro de sí el usuario que le dio like, debemos incluirlo
@@ -82,6 +81,7 @@ const handleLike = async (req, res) => {
 }
 
 const getLikes = async (req, res) => {
+    verifySession(req);
     const postid = req.body.postid;
     try {
         const post = await Post.findById(postid).exec();
@@ -90,10 +90,10 @@ const getLikes = async (req, res) => {
     } catch (err) {
         res.status(500).json({ 'message': err })
     }
-
 }
 
 const getComentarios = async (req, res) => {
+    verifySession(req);
     const postid = req.body.postid;
     try {
         const post = await Post.findById(postid).exec();
@@ -105,8 +105,7 @@ const getComentarios = async (req, res) => {
 }
 
 const handleNewComment = async (req, res) => {
-    let session = req.session
-    if (!session.userid) res.redirect('/login');
+    verifySession(req);
     const user = req.body.user;
     const content = req.body.content;
     const date = req.body.date;
@@ -145,12 +144,12 @@ const matchAutores = async (req,res)=>{
 }
 
 const deletePost = async(req,res)=>{
+    verifySession(req);
     const postid = req.body.postid;
     try{
         const post = await Post.findById(postid).exec();
         Post.findOneAndDelete({_id: postid }, (err, docs) =>{
-            if (err) {res.json({'message':err})
-            console.log(err, docs);}
+            if (err) res.json({'message':err})
             else res.json({'success': 'The post has been deleted'})
         });
     }catch(err){

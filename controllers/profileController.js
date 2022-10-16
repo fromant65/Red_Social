@@ -8,6 +8,11 @@ const getUserInfo = async (req,res)=>{
     else res.status(404).json({'message':'User not found'});
 }
 
+/*Funcion para obtener los posts de determinado usuario*/
+const getUserPosts = async (req,res)=>{
+
+}
+
 module.exports = {
     getUserInfo
 }

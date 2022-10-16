@@ -10,8 +10,10 @@ const updateUserData = async (req, res) => {
         if(newFullName) updateData.fullname = newFullName;
         if(updateData){
             const result = await User.findOneAndUpdate({ 'username': user }, updateData)
-        };
-        res.status(201).json({ 'success': `User data has been updated` });
+            res.status(201).json({ 'success': `User data has been updated` });
+        }else{
+            res.status(204);
+        }
     } catch (err) {
         res.status(500).json({ 'error': err.message })
     }

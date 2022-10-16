@@ -17,7 +17,6 @@ const handleLogin= async (req,res)=>{
         session=req.session;
         session.userid=foundUser?.username || foundMail?.username;
         session.email=foundUser?.email || foundMail?.email;
-        console.log(req.session)
         //const roles=Object.values(foundUser.roles);
         res.redirect('/home');
     }else{
