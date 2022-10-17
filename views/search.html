@@ -8,10 +8,8 @@
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/aside.css">
-    <link rel="stylesheet" href="css/publicaciones.css">
-    <link rel="stylesheet" href="css/profile.css">
-    <link rel="stylesheet" href="css/search.css">
-    <title>Perfil</title>
+    <link rel="stylesheet" href="css/config.css">
+    <title>Buscar</title>
 </head>
 <body>
     <div class="row">
@@ -21,14 +19,13 @@
                 <a href="/home"><i class="fa-solid fa-book"></i><p>Texbook</p></a>
             </div>
             <div>
-                <a href="profile?"><i class="fa-solid fa-user"></i><p>Perfil</p></a>
+                <a href="/profile?"><i class="fa-solid fa-user"></i><p>Perfil</p></a>
             </div>
             <div>
                 <a href="/config"><i class="fa-solid fa-key"></i><p>Configuraciones</p></a>
             </div>
             <div>
-                <div class="search"><a href="/search"><i class="fa-solid fa-magnifying-glass"></i></a><input type="text" id="search-user" placeholder="Buscar usuario"></div>
-                <div class="search-result"></div>
+                <a href=""><i class="fa-solid fa-magnifying-glass"></i><p>Search</p></a>
             </div>
             <div>
                 <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Finalizar sesión</p></a>
@@ -36,20 +33,10 @@
             
         </aside>
         <section class="col">
-            <div class="info-usuario"></div>
-            <div class="publicaciones-usuario"></div>
-            <div class="comentarios"></div>
+            
         </section>
+        
     </div>
-    <script src="js/getUserId.js"></script>
-    <script src="js/getPostId.js"></script>
-    <script src="js/profile/infoUsuario.js"></script>
-    <script src="js/profile/publicacionesUsuario.js"></script>
-    <script src="js/publicaciones/publicacionLikes.js"></script>
-    <script src="js/publicaciones/publicacionComentarios.js"></script>
-    <script src="js/publicaciones/publicacionOpciones.js"></script>
-    <script src="js/publicaciones/createPublicationCode.js"></script>
-    <script src="js/searchUser.js"></script>
     <!--Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"

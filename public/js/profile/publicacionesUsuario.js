@@ -1,7 +1,12 @@
 const publicacionesUsuario = document.querySelector('.publicaciones-usuario');
 
 const getPublicacionesUsuario = async ()=>{
-    const res = await fetch('/user-publicaciones');
+    const searchParams = new URLSearchParams(document.location.search)
+    const username = searchParams.get('username');
+    const link = document.URL.split("?")[1]?.length?
+        `/user-publicaciones/${username}`:
+        `/user-publicaciones/${await getUserId()}`;
+    const res = await fetch(link);
     const data = await res.json();
     return data;
 }

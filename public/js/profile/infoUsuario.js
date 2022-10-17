@@ -1,7 +1,12 @@
 const infoUsuarioContainer = document.querySelector('.info-usuario');
 
 const cargarInfoUsuario = async()=>{
-    const res = await fetch('/user-info');
+    const searchParams = new URLSearchParams(document.location.search)
+    const username = searchParams.get('username');
+    const link = document.URL.split("?")[1]?.length?
+        `/user-info/${username}`:
+        `/user-info/${await getUserId()}`;
+    const res = await fetch(link);
     const data = await res.json()
     return data.user;
 }

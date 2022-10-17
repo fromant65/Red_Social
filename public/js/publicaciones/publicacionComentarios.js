@@ -96,7 +96,6 @@ const crearComentario =  (comentario)=>{
 
     userDiv.style.display = "inline";
     dateDiv.style.display = "inline";
-    opcionesButton.style.display = "inline-block";
 
     opcionesButton.addEventListener('click', (e)=>{
         if(opcionesButton.classList.contains('comment-opciones-abierto')){

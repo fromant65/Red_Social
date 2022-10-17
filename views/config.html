@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/aside.css">
     <link rel="stylesheet" href="css/config.css">
+    <link rel="stylesheet" href="css/search.css">
     <title>Configuraciones</title>
 </head>
 <body>
@@ -19,14 +20,19 @@
                 <a href="/home"><i class="fa-solid fa-book"></i><p>Texbook</p></a>
             </div>
             <div>
-                <a href="/profile"><i class="fa-solid fa-user"></i><p>Perfil</p></a>
+                <a href="/profile?"><i class="fa-solid fa-user"></i><p>Perfil</p></a>
             </div>
             <div>
                 <a href=""><i class="fa-solid fa-key"></i><p>Configuraciones</p></a>
             </div>
             <div>
+                <div class="search"><a href="/search"><i class="fa-solid fa-magnifying-glass"></i></a><input type="text" id="search-user" placeholder="Buscar usuario"></div>
+                <div class="search-result"></div>
+            </div>
+            <div>
                 <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><p>Finalizar sesión</p></a>
             </div>
+            
         </aside>
         <section class="col">
             <h1>Configuraciones</h1>
@@ -57,5 +63,10 @@
     </div>
     <script src="js/config/changePassword.js"></script>
     <script src="js/config/changeUserInfo.js"></script>
+    <script src="js/searchUser.js"></script>
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
 </body>
 </html>
