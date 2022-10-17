@@ -2,7 +2,7 @@ const matchAutorPublicacion = async(id)=>{
     //Esta funcion determina si el que intenta abrir las opciones de la publicación y su autor
     //son la misma persona
     const userid = await getUserId();
-    const response = await fetch(`${location}/match-autores`, {
+    const response = await fetch(`home/match-autores`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

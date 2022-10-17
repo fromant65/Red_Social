@@ -2,7 +2,7 @@ const Post = require('../model/Post')
 const {verifySession} = require('./verifySession');
 
 const handleNewPost = async (req, res) => {
-    verifySession(req);
+    verifySession(req,res);
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -19,7 +19,7 @@ const handleNewPost = async (req, res) => {
 }
 
 const showPosts = (req, res) => {
-    verifySession(req);
+    verifySession(req,res);
     const lastDate = req.body.lastPostDate;
     const firstDate = new Date(lastDate);
     firstDate.setHours(firstDate.getHours() - 1);
@@ -32,7 +32,7 @@ const showPosts = (req, res) => {
 }
 
 const getPostId = async (req, res) => {
-    verifySession(req);
+    verifySession(req,res);
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -49,7 +49,7 @@ const getPostId = async (req, res) => {
 }
 
 const handleLike = async (req, res) => {
-    verifySession(req);
+    verifySession(req,res);
     const userid = req.body.userid;
     const postid = req.body.postid;
     const post = await Post.findById(postid).exec();
@@ -81,7 +81,7 @@ const handleLike = async (req, res) => {
 }
 
 const getLikes = async (req, res) => {
-    verifySession(req);
+    verifySession(req,res);
     const postid = req.body.postid;
     try {
         const post = await Post.findById(postid).exec();
@@ -93,8 +93,8 @@ const getLikes = async (req, res) => {
 }
 
 const getComentarios = async (req, res) => {
-    verifySession(req);
-    const postid = req.body.postid;
+    verifySession(req,res);
+    const postid = req.params.postid;
     try {
         const post = await Post.findById(postid).exec();
         const comentarios = post.comments;
@@ -105,7 +105,7 @@ const getComentarios = async (req, res) => {
 }
 
 const handleNewComment = async (req, res) => {
-    verifySession(req);
+    verifySession(req,res);
     const user = req.body.user;
     const content = req.body.content;
     const date = req.body.date;
@@ -139,18 +139,51 @@ const matchAutores = async (req,res)=>{
         else res.json({match:false});
     }catch(err){
         res.status(500).json({'message': err.message});
-    }
-    
+    } 
 }
 
 const deletePost = async(req,res)=>{
-    verifySession(req);
+    verifySession(req,res);
     const postid = req.body.postid;
     try{
         const post = await Post.findById(postid).exec();
         Post.findOneAndDelete({_id: postid }, (err, docs) =>{
             if (err) res.json({'message':err})
             else res.json({'success': 'The post has been deleted'})
+        });
+    }catch(err){
+        res.status(500).json({'message': err})
+    }
+}
+
+const matchCommentAutores = async (req,res)=>{
+    const postid = req.body.postid;
+    const commentid = req.body.commentid;
+    const userid = req.body.userid;
+    try{
+        const post = await Post.findById(postid).exec();
+        const comment = post.comments.filter(comment => comment._id.toString() === commentid)[0];
+        if(comment.user === userid) res.json({match:true})
+        else res.json({match:false});
+    }catch(err){
+        res.status(500).json({'message': err.message});
+    }
+    
+}
+
+const deleteComment = async(req,res)=>{
+    verifySession(req,res);
+    const postid = req.body.postid;
+    const commentid = req.body.commentid;
+    try{
+        const post = await Post.findById(postid).exec();
+        const comments = post.comments;
+        //Filtramos el comentario cuya ID recibimos para eliminar
+        const newComments = comments.filter(comment=> comment._id.toString() !== commentid);
+        //Actualizamos los comentarios del post sin el comentario que eliminamos
+        Post.findOneAndUpdate({ _id: postid }, { comments: newComments }, (err, docs) =>{
+            if (err) res.json({'message':err})
+            else res.json({'success': 'The comment has been deleted'})
         });
     }catch(err){
         res.status(500).json({'message': err})
@@ -166,5 +199,7 @@ module.exports = {
     getComentarios, 
     handleNewComment, 
     matchAutores,
-    deletePost
+    deletePost,
+    matchCommentAutores,
+    deleteComment
  };

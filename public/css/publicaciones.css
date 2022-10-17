@@ -164,6 +164,53 @@
     padding-left: 10px;
 }
 
+.comment-opciones{
+    position: relative;
+    height: 20px;
+    border: none;
+}
+
+.comment-opciones div{
+    position:absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.comment-opciones div:hover{
+    color:rgb(120, 180, 230);
+}
+
+.comment-opciones .opciones-menu{
+    display: none;
+    position: absolute;
+    top:20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    min-width: 160px;
+    padding: 12px 16px;
+    z-index: 1;
+}
+
+.comment-opciones-abierto .opciones-menu{
+    display: block;
+}
+
+.opciones-menu button{
+    border:none;
+    outline: none;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin: 5px;
+    padding: 5px;
+}
+
+.opciones-menu button:hover{
+    background-color: rgb(235, 245, 255);
+}
+
 .input-comment{
     border: 1px solid #ddd;
     border-radius: 5px;

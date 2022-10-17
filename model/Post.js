@@ -19,7 +19,8 @@ const postSchema = new Schema({
     comments: [{
         user: {type: String, required: true},
         content: {type: String, required: true},
-        date:{type: Date, default: Date.now, required: true}
+        date:{type: Date, default: Date.now, required: true},
+        id: mongoose.ObjectId
     }]
 });
 
