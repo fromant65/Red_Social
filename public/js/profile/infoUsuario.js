@@ -28,7 +28,7 @@ const generarHtmlInfoUsuario = async (data)=>{
     emailDiv.id = 'email-div';
     fullnameDiv.id = 'fullname-div';
 
-    userDiv.innerHTML = `<a href="/profile?${username}">@${username}</a>`;
+    userDiv.innerHTML = `<a href="/profile?username=${username}">@${username}</a>`;
     emailDiv.innerHTML = `<p>Email:</p><p id="email">${email}</p>`;
     fullnameDiv.innerText = fullname;
     /*rolesDiv.innerText = 'Roles: \n';
