@@ -1,0 +1,49 @@
+.info-usuario{
+    padding: 40px;
+    width: 100%;
+    margin: 0;
+    border-bottom:1px solid #ddd;
+}
+
+#fullname-div{
+    font-weight: bolder;
+    font-size: 30px;
+    display: inline;
+    padding-right: 8px;
+    color: rgb(100,160,210);
+}
+
+#fullname-div:hover{
+    color: rgb(80,140,190);
+}
+
+#username-div{
+    font-weight: bold;
+    font-size: 25px;
+    display: inline;
+}
+
+#username-div a{
+    text-decoration: none;
+    color: black;
+}
+
+#username-div a:hover{
+    text-decoration: underline;
+    color: rgb(80,140,190);
+}
+
+#email-div{
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+#email-div p{
+    display: inline
+}
+
+#email{
+    font-weight:700;
+    margin-left: 10px;
+    color: rgb(100,160,210);
+}

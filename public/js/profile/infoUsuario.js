@@ -17,23 +17,27 @@ const generarHtmlInfoUsuario = async (data)=>{
     const username = _data.username;
     const email = _data.email;
     const fullname = _data.fullname;
-    const roles = _data.roles;
+    //const roles = _data.roles;
 
     const userDiv = document.createElement('div');
-    const rolesDiv = document.createElement('div');
+    //const rolesDiv = document.createElement('div');
     const emailDiv  = document.createElement('div');
     const fullnameDiv = document.createElement('div');
     
-    userDiv.innerText = `Username: ${username}`;
-    emailDiv.innerText = `Email: ${email}`;
-    fullnameDiv.innerText = `Nombre completo: ${fullname}`;
-    rolesDiv.innerText = 'Roles: \n';
-    Object.entries(roles).map(rol=>{rolesDiv.innerText += `\t${rol[0]}\n`;})
+    userDiv.id = 'username-div';
+    emailDiv.id = 'email-div';
+    fullnameDiv.id = 'fullname-div';
 
-    infoUsuarioContainer.appendChild(userDiv);
-    infoUsuarioContainer.appendChild(rolesDiv);
-    infoUsuarioContainer.appendChild(emailDiv);
+    userDiv.innerHTML = `<a href="/profile?${username}">@${username}</a>`;
+    emailDiv.innerHTML = `<p>Email:</p><p id="email">${email}</p>`;
+    fullnameDiv.innerText = fullname;
+    /*rolesDiv.innerText = 'Roles: \n';
+    Object.entries(roles).map(rol=>{rolesDiv.innerText += `\t${rol[0]}\n`;})*/
+
     infoUsuarioContainer.appendChild(fullnameDiv);
+    infoUsuarioContainer.appendChild(userDiv);
+    //infoUsuarioContainer.appendChild(rolesDiv);
+    infoUsuarioContainer.appendChild(emailDiv);
 }
 
 generarHtmlInfoUsuario(cargarInfoUsuario())
