@@ -1,9 +1,10 @@
-const searchUser = document.getElementById('search-user');
+const input = document.getElementById('search-user');
+const submit = document.getElementById('submit-search');
 const searchResult = document.querySelector('.search-result');
-searchResult.classList.add('search-result-invisible')
 
-searchUser.addEventListener('input', async ()=>{
-    const response = await fetch(`/search-user/${searchUser.value}`);
+submit.addEventListener('click', async()=>{
+    const username = input.value;
+    const response = await fetch(`/search-user/${username}`);
     const users = await response.json();
     if(users.length !== 0 && searchUser.value){
         searchResult.classList.add('search-result-visible')
