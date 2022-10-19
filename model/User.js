@@ -19,13 +19,17 @@ const userSchema = new Schema({
         required: true
     },
     email: {
-        type: String, 
-        required: true
+        type: String
     },
     fullname: {
-        type: String,
-        required: true
-    }
+        type: String
+    },
+    following: [{
+        username: String
+    }],
+    followers: [{
+        username: String
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

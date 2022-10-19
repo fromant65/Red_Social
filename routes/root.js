@@ -35,6 +35,8 @@ router.get('/profile', (req,res)=>{
     else res.redirect('/login');
 })
 
+router.post('/profile/seguir', profileController.follow)
+
 router.get('/user-info/:username', profileController.getUserInfo)
 
 router.get('/user-publicaciones/:username', profileController.getUserPosts)
