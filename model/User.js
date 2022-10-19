@@ -29,6 +29,12 @@ const userSchema = new Schema({
     }],
     followers: [{
         username: String
+    }],
+    chats : [{
+        chatid: Schema.Types.ObjectId
+    }],
+    chatsGrupales : [{
+        type: Schema.Types.ObjectId //Esta feature aún no está incluida
     }]
 });
 

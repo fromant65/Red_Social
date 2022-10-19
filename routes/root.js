@@ -3,6 +3,8 @@ const router = express.Router();
 const path = require('path');
 const profileController = require('../controllers/profileController');
 const searchController = require('../controllers/searchController')
+const chatController = require('../controllers/chatController')
+const followerController = require('../controllers/followerController')
 
 router.get('^/$|/index(.html)?', (req,res)=>{
     res.sendFile(path.join(__dirname, '..', 'views', 'index.html'))
@@ -49,5 +51,12 @@ router.get('/search', (req,res)=>{
 
 router.get('/search-user/:string', searchController.searchUsers);
 router.get('/search-user/', searchController.searchUsers);
+
+router.get('/get-chats-from-user/:username', chatController.getChatsFromUser)
+router.get('/get-chat-participants/:id', chatController.getChatParticipants)
+router.get('/get-chat-messages/:id', chatController.getChatMessages)
+router.post('/create-chat', chatController.createChat)
+
+router.get('/get-followed/:username', followerController.getFollowed)
 
 module.exports = router
