@@ -1,4 +1,5 @@
 const chatTab = document.querySelector(".chat-tab");
+const page = document.querySelector(".page");
 
 const getChats = async () => {
     const username = await getUserId();
@@ -17,17 +18,19 @@ const getFollowed = async () => {
 }
 
 const createChatsHTML = async (chats) => {
+    //console.log(chats)
     const container = document.createElement('div');
+    container.classList.add('chats-container')
     container.innerText = 'Chats';
     const chatParticipants = await getChatParticipants(chats);
     const documentFragment = document.createDocumentFragment();
     for (let participant in chatParticipants) {
         const chatDiv = document.createElement('div');
-        chatDiv.innerText = chatParticipants[participant].username;
-        chatDiv.id = chats[participant].username;
+        chatDiv.innerHTML = `<i class="fa-solid fa-circle-small"></i>${chatParticipants[participant].username}`;
+        chatDiv.id = chats[participant].chatid;
         chatDiv.addEventListener('click', abrirChat);
         documentFragment.appendChild(chatDiv);
-    } 
+    }
     container.appendChild(documentFragment);
     return container;
 }
@@ -49,8 +52,17 @@ const getChatParticipants = async (chats) => {
     //Los chats grupales estarán almacenados en otro atributo de User
 }
 
-const abrirChat = () => {
-    console.log('chat abierto');
+const abrirChat = async (e) => {
+    const id = e.currentTarget.id;
+    const userid = await getUserId();
+    const req = await fetch(`/get-chat-by-id/${id}`);
+    const res = await req.json();
+    const chat = res.chat;
+    const chatDiv = await createChatHTML(id);
+    let otherParticipant = chat.participants.filter(participant => participant.username !== userid)
+    chatDiv.children[0].innerText = otherParticipant[0].username
+    //Asignamos al name container el nombre del otro participante del chat
+    page.appendChild(chatDiv);
 }
 
 const createFollowedHTML = async (followed) => {
@@ -60,14 +72,15 @@ const createFollowedHTML = async (followed) => {
     //donde uno tendria el chat y el otro no, aunque podemos simplemente vaciarlos.
     const container = document.createElement('div');
     container.innerText = 'Seguidos';
+    container.classList.add('followed-container')
     const documentFragment = document.createDocumentFragment();
-    const availableChats = await getChatParticipants( await getChats());
+    const availableChats = await getChatParticipants(await getChats());
     for (let user in followed) {
         //Verificamos que el usuario seguido en esta iteración no esté en la lista de chats abiertos. 
         //Si lo esta, terminamos la iteracion y empezamos otra
-        if(availableChats.filter(chat=>followed[user].username==chat.username).length === 1) continue;
+        if (availableChats.filter(chat => followed[user].username == chat.username).length === 1) continue;
         const chatDiv = document.createElement('div');
-        chatDiv.innerText = followed[user].username;
+        chatDiv.innerHTML =`<i class="fa-solid fa-circle-small"></i>${followed[user].username}`;
         chatDiv.id = followed[user].username;
         chatDiv.addEventListener('click', crearChat);
         documentFragment.appendChild(chatDiv);
@@ -92,7 +105,7 @@ const crearChat = async (e) => {
     })
     const res = await req.json();
     const chatid = res.id;
-    chatTab.appendChild(await createChatHTML(chatid))
+    page.appendChild(await createChatHTML(chatid))
 }
 
 const createChatHTML = async (chatid) => {
@@ -113,6 +126,26 @@ const createChatHTML = async (chatid) => {
         documentFragment.appendChild(messageDiv);
     }
 
+    chatContainer.classList.add('chat-container');
+    nameContainer.classList.add('name-container');
+    messagesContainer.classList.add('messages-container');
+    sendMessageContainer.classList.add('send-message-container');
+    messageInput.classList.add('message-input');
+    sendMessage.classList.add('send-message');
+
+    sendMessage.disabled = true;
+
+    nameContainer.addEventListener('click', killChat)
+    messageInput.addEventListener('input', () => {
+        if (messageInput.value !== '') {
+            sendMessage.disabled = false;
+            sendMessage.classList.add('send-message-not-disabled');
+        } else {
+            sendMessage.disabled = true;
+            sendMessage.classList.remove('send-message-not-disabled')
+        }
+    })
+
     messageInput.placeholder = 'Escribe un mensaje...';
     sendMessage.value = 'Enviar';
     sendMessage.type = 'submit';
@@ -125,6 +158,12 @@ const createChatHTML = async (chatid) => {
     chatContainer.appendChild(sendMessageContainer);
 
     return chatContainer
+}
+
+const killChat = (e)=>{
+    const chatDiv = e.currentTarget.parentElement;
+    chatDiv.display='none';
+    chatDiv.innerHTML = '';
 }
 
 const getChatMessages = async (id) => {

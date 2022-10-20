@@ -55,6 +55,7 @@ router.get('/search-user/', searchController.searchUsers);
 router.get('/get-chats-from-user/:username', chatController.getChatsFromUser)
 router.get('/get-chat-participants/:id', chatController.getChatParticipants)
 router.get('/get-chat-messages/:id', chatController.getChatMessages)
+router.get('/get-chat-by-id/:id', chatController.getChatById);
 router.post('/create-chat', chatController.createChat)
 
 router.get('/get-followed/:username', followerController.getFollowed)
