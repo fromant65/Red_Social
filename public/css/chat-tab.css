@@ -125,3 +125,37 @@
 .send-message-not-disabled:hover{
     background-color: rgb(100,160,210);
 }
+
+.messages-container{
+    overflow: auto;
+}
+
+.message-container{
+    margin: 3px;
+    display: block;
+    position: relative;
+}
+
+.message-filler{
+    padding: 10px;
+    user-select: none;
+}
+
+.message-self{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(70,130,180);
+    color:#fff;
+    display: inline-block;
+    position:absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.message-other{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(230, 245, 255);
+    color:#000;
+    display: inline-block;
+}

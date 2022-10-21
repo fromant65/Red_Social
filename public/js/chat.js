@@ -44,7 +44,7 @@ const getChatParticipants = async (chats) => {
         const req = await fetch(`/get-chat-participants/${chats[chat].chatid}`)
         const res = await req.json();
         let participants = res.participants;
-        participants = participants.filter(participant => participant !== userid)
+        participants = participants.filter(participant => participant.username !== userid)
         chatsParticipants.push(participants[0]);
     }
     return chatsParticipants;
@@ -80,7 +80,7 @@ const createFollowedHTML = async (followed) => {
         //Si lo esta, terminamos la iteracion y empezamos otra
         if (availableChats.filter(chat => followed[user].username == chat.username).length === 1) continue;
         const chatDiv = document.createElement('div');
-        chatDiv.innerHTML =`<i class="fa-solid fa-circle-small"></i>${followed[user].username}`;
+        chatDiv.innerHTML = `<i class="fa-solid fa-circle-small"></i>${followed[user].username}`;
         chatDiv.id = followed[user].username;
         chatDiv.addEventListener('click', crearChat);
         documentFragment.appendChild(chatDiv);
@@ -119,11 +119,28 @@ const createChatHTML = async (chatid) => {
     const messages = await getChatMessages(chatid);
     const documentFragment = document.createDocumentFragment();
     for (let message in messages) {
-        const messageDiv = document.createElement('div');
+        const messageContainer = document.createElement('div')
+        const messageDiv = document.createElement('div')
+        
         messageDiv.innerText = messages[message].content;
         messageDiv.setAttribute('author', messages[message].author);
         messageDiv.setAttribute('date', messages[message].date);
-        documentFragment.appendChild(messageDiv);
+        const user = await getUserId();
+        console.log(user, messageDiv.getAttribute('author'))
+        if (messageDiv.getAttribute('author') === user) {
+            messageDiv.classList.add('message-self');
+            const messageFiller = document.createElement('div');
+            messageFiller.innerText = messages[message].content;
+            messageFiller.style.backgroundColor = 'transparent';
+            messageFiller.style.color = 'transparent';
+            messageFiller.classList.add('message-filler')
+            messageContainer.appendChild(messageFiller)
+        } else {
+            messageDiv.classList.add('message-other');
+        }
+        messageContainer.classList.add('message-container')
+        messageContainer.appendChild(messageDiv)
+        documentFragment.appendChild(messageContainer)
     }
 
     chatContainer.classList.add('chat-container');
@@ -145,8 +162,34 @@ const createChatHTML = async (chatid) => {
             sendMessage.classList.remove('send-message-not-disabled')
         }
     })
+    sendMessage.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const content = messageInput.value;
+        const date = new Date();
+        const submitDiv = e.currentTarget
+        const chatid = submitDiv.id;
+        console.log(submitDiv, submitDiv.id)
+        const req = await fetch('/send-message', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'content': content,
+                'chatid': chatid,
+                'date': date
+            })
+        })
+        const res = await req.json();
+        if (!res.success) return;
+        let chatDiv = submitDiv.parentElement.parentElement
+        createMessageHTML(content, date, chatDiv);
+        submitDiv.parentElement.childNodes[0].value = '';
+    })
 
     messageInput.placeholder = 'Escribe un mensaje...';
+    sendMessage.id = chatid;
     sendMessage.value = 'Enviar';
     sendMessage.type = 'submit';
 
@@ -156,13 +199,34 @@ const createChatHTML = async (chatid) => {
     chatContainer.appendChild(nameContainer);
     chatContainer.appendChild(messagesContainer);
     chatContainer.appendChild(sendMessageContainer);
-
+    //chatContainer.childNodes.
     return chatContainer
 }
 
-const killChat = (e)=>{
+const createMessageHTML = async (content, date, chatDiv) => {
+    const message = document.createElement('div');
+    const messageContainer = document.createElement('div');
+    const chatContainer = chatDiv;
+    const messagesContainer = chatContainer.childNodes.item(1);
+    const messageFiller = document.createElement('div');
+    messageFiller.innerText = messages[message].content;
+    messageFiller.style.backgroundColor = 'transparent';
+    messageFiller.style.color = 'transparent';
+    messageFiller.classList.add('message-filler')
+    const author = await getUserId();
+    message.innerText = content;
+    message.setAttribute('author', author);
+    message.setAttribute('date', date);
+    message.classList.add('message-self')
+    messageContainer.classList.add('message-container')
+    messageContainer.appendChild(message);
+    messageContainer.appendChild(messageFiller);
+    messagesContainer.appendChild(messageContainer)
+}
+
+const killChat = (e) => {
     const chatDiv = e.currentTarget.parentElement;
-    chatDiv.display='none';
+    chatDiv.display = 'none';
     chatDiv.innerHTML = '';
 }
 

@@ -58,6 +58,8 @@ router.get('/get-chat-messages/:id', chatController.getChatMessages)
 router.get('/get-chat-by-id/:id', chatController.getChatById);
 router.post('/create-chat', chatController.createChat)
 
+router.post('/send-message', chatController.sendMessage)
+
 router.get('/get-followed/:username', followerController.getFollowed)
 
 module.exports = router

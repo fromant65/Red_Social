@@ -65,4 +65,24 @@ const createChat = async (req, res) => {
     }
 }
 
-module.exports = { getChatsFromUser, getChatParticipants, getChatMessages, getChatById, createChat };
+const sendMessage = async (req, res) => {
+    const content = req.body.content;
+    const date = req.body.date;
+    const chatid = req.body.chatid;
+    const author = session.userid;
+    try {
+        const chat = await Chat.findById(chatid).exec()
+        chat.messages.push({
+            'author': author,
+            'content': content,
+            'date': date
+        })
+        chat.save();
+        res.status(201).json({'success':'message sent succesfully'})
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ 'message': err.message })
+    }
+}
+
+module.exports = { getChatsFromUser, getChatParticipants, getChatMessages, getChatById, createChat, sendMessage };
