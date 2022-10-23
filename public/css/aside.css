@@ -2,6 +2,7 @@
 
 .aside-filler{
     max-width: 250px !important;
+    padding: 0 !important;
 }
 
 aside{
@@ -9,6 +10,7 @@ aside{
     border-right: 1px solid #ddd;
     max-width: 250px !important;
     position:fixed;
+    padding: 0 !important;
 }
 
 aside div{

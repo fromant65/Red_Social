@@ -1,7 +1,9 @@
 const divSeguimiento = document.querySelector('.seguimiento');
+const seguidores = document.querySelector('.seguidores')
+const seguidos = document.querySelector('.seguidos')
 const seguir = document.querySelector('.seguir');
 const searchParams = new URLSearchParams(document.location.search)
-const usernamePerfil = searchParams.get('username');
+const usernamePerfil=searchParams.get('username');
 
 const determinarSeguimiento = async () => {
     const userid = await getUserId();
@@ -36,13 +38,8 @@ seguir.addEventListener('click', async()=>{
 
 const generarBotonCorrespondiente = async ()=>{
     const relacion = await determinarSeguimiento();
-    if(relacion === 'misma-persona') eliminarDiv();
+    if(relacion === 'misma-persona') return;
     else contenidoSeguir(relacion);
-}
-
-const eliminarDiv = ()=>{
-    divSeguimiento.style.display = 'none';
-    divSeguimiento.style.position = 'absolute';
 }
 
 const contenidoSeguir = (relacion)=>{
@@ -57,4 +54,26 @@ const contenidoSeguir = (relacion)=>{
     }
 }
 
+const getSeguidores = async ()=>{
+    let username;
+    if(!usernamePerfil) username = await getUserId();
+    else username = usernamePerfil;
+    const req = await fetch(`/get-followers/${username}`)
+    const res = await req.json();
+    const nSeguidores = res.followers.length;
+    seguidores.innerText = `Followers: ${nSeguidores}`;
+}
+
+const getSeguidos = async ()=>{
+    let username;
+    if(!usernamePerfil) username = await getUserId();
+    else username = usernamePerfil;
+    const req = await fetch(`/get-followed/${username}`)
+    const res = await req.json();
+    const nSeguidos = res.followed.length;
+    seguidos.innerText = `Following: ${nSeguidos}`;
+}
+
+getSeguidos();
+getSeguidores();
 generarBotonCorrespondiente();

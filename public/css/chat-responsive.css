@@ -1,0 +1,169 @@
+.row{
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+main{
+    padding:0 !important;
+}
+
+.chat-tab{
+    display:block;
+    padding: 0;
+}
+
+.chats-container, .followed-container{
+    padding: 10px;
+    margin: 0;
+    font-weight: bolder;
+    border-bottom: 1px solid #ddd;
+}
+
+.chats-container div, .followed-container div{
+    padding: 3px;
+    margin: 5px;
+    border-left: 1px solid #ddd;
+    padding-left: 10px;
+    font-weight: bold;
+    color:rgb(100,160,210);
+    user-select: none;
+}
+
+.chats-container div:hover, .followed-container div:hover{
+    background-color: rgb(245, 250, 255);
+    color:rgb(80,140,190);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.hide{
+    display: none;
+    position: absolute;
+}
+
+/*Chat*/
+
+.chat{
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+.chat-container{
+    display: block;
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+}
+
+.return-to-chats{
+    padding: 2vh;
+    background-color: rgb(100,160,210);
+    color: #fff;
+    font-weight: bolder;
+    user-select: none;
+    width: 10%;
+    display: inline-block;
+    text-align: center;
+    height: 8vh;
+}
+
+.return-to-chats:hover{
+    background-color: rgb(80,140,190);
+}
+
+.name-container{
+    padding: 2vh;
+    background-color: rgb(100,160,210);
+    color: #fff;
+    font-weight: bolder;
+    user-select: none;
+    width: 90%;
+    display: inline-block;
+    height: 8vh;
+    text-align: center;
+}
+
+.messages-container{
+    padding: 0;
+    height: 84vh;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    overflow: auto;
+}
+
+.send-message-container{
+    position: absolute;
+    bottom: 0;
+}
+
+.message-input{
+    border:1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    margin-right: 5px;
+    padding: 5px;
+    width: 180px;
+    background-color: #efefef;
+}
+
+.message-input:focus{
+    outline:none;
+}
+
+.send-message{
+    margin: 8px;
+    margin-left: 5px;
+    padding: 5px;
+    border:none;
+    border-radius:10px;
+    width: 80px;
+    background-color: rgb(140,200,250);
+    color:#fff;
+    font-weight: bold;
+    user-select: none;
+}
+
+.send-message-not-disabled{
+    background-color: rgb(120,180,230);
+}
+
+.send-message-not-disabled:hover{
+    background-color: rgb(100,160,210);
+}
+
+.messages-container{
+    overflow: auto;
+}
+
+.message-container{
+    margin: 3px;
+    display: block;
+    position: relative;
+}
+
+.message-filler{
+    padding: 10px;
+    user-select: none;
+}
+
+.message-self{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(70,130,180);
+    color:#fff;
+    display: inline-block;
+    position:absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.message-other{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(230, 245, 255);
+    color:#000;
+    display: inline-block;
+}

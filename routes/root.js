@@ -52,6 +52,12 @@ router.get('/search', (req,res)=>{
 router.get('/search-user/:string', searchController.searchUsers);
 router.get('/search-user/', searchController.searchUsers);
 
+router.get('/chat', (req,res)=>{
+    let session = req.session;
+    if(session.userid) res.sendFile(path.join(__dirname, '..', 'views', 'chat.html'))
+    else res.redirect('/login');
+})
+
 router.get('/get-chats-from-user/:username', chatController.getChatsFromUser)
 router.get('/get-chat-participants/:id', chatController.getChatParticipants)
 router.get('/get-chat-messages/:id', chatController.getChatMessages)
@@ -61,5 +67,6 @@ router.post('/create-chat', chatController.createChat)
 router.post('/send-message', chatController.sendMessage)
 
 router.get('/get-followed/:username', followerController.getFollowed)
+router.get('/get-followers/:username', followerController.getFollowers)
 
 module.exports = router

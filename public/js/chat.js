@@ -227,6 +227,7 @@ const killChat = (e) => {
     const chatDiv = e.currentTarget.parentElement;
     chatDiv.display = 'none';
     chatDiv.innerHTML = '';
+    location.href = `${location}`
 }
 
 const getChatMessages = async (id) => {
@@ -235,7 +236,6 @@ const getChatMessages = async (id) => {
     const messages = res.messages;
     return messages;
 }
-
 
 getChats()
     .then(async chats => {
