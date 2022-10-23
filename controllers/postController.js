@@ -1,8 +1,9 @@
 const Post = require('../model/Post')
-const {verifySession} = require('./verifySession');
+const User = require('../model/User')
+const { verifySession } = require('./verifySession');
 
 const handleNewPost = async (req, res) => {
-    verifySession(req,res);
+    verifySession(req, res);
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -18,21 +19,34 @@ const handleNewPost = async (req, res) => {
     }
 }
 
-const showPosts = (req, res) => {
-    verifySession(req,res);
-    const lastDate = req.body.lastPostDate;
-    const firstDate = new Date(lastDate);
-    firstDate.setHours(firstDate.getHours() - 1);
-    //La siguiente funcion busca los posts entre la primera y la ultima fecha indicadas
-    //que por definicion de la función tienen 1 hora de diferencia.
-    Post.find({ date: { "$gte": firstDate, "$lt": lastDate } }).lean().exec((err, posts) => {
-        if (!posts) res.status(204);
-        return res.status(200).json(posts);
-    });
+const showPosts = async (req, res) => {
+    verifySession(req, res);
+    const userid = req.body.userid;
+    try {
+        const user = await User.findOne({username: userid}).exec();
+        const following =[];
+        for(follow in user.following){
+            following.push(user.following[follow].username)
+        }
+        following.push(userid);
+        //El array following tiene los usernames de toda la gente que sigue el usuario y el mismo usuario
+        const lastDate = req.body.lastPostDate;
+        const firstDate = new Date(lastDate);
+        firstDate.setHours(firstDate.getHours() - 1);
+        //La siguiente funcion busca los posts entre la primera y la ultima fecha indicadas
+        //que por definicion de la función tienen 1 hora de diferencia. 
+        //Ademas filtra solo los posts de los seguidores del usuario y el mismo usuario
+        Post.find({ date: { "$gte": firstDate, "$lt": lastDate }, user:{$in: following}}).lean().exec((err, posts) => {
+            if (!posts) res.status(204);
+            return res.status(200).json(posts);
+        });
+    }catch(err){
+        res.status(500).json({ 'message': err.message })
+    } 
 }
 
 const getPostId = async (req, res) => {
-    verifySession(req,res);
+    verifySession(req, res);
     user = req.body.user;
     content = req.body.content;
     date = req.body.date;
@@ -49,7 +63,7 @@ const getPostId = async (req, res) => {
 }
 
 const handleLike = async (req, res) => {
-    verifySession(req,res);
+    verifySession(req, res);
     const userid = req.body.userid;
     const postid = req.body.postid;
     const post = await Post.findById(postid).exec();
@@ -81,7 +95,7 @@ const handleLike = async (req, res) => {
 }
 
 const getLikes = async (req, res) => {
-    verifySession(req,res);
+    verifySession(req, res);
     const postid = req.body.postid;
     try {
         const post = await Post.findById(postid).exec();
@@ -93,7 +107,7 @@ const getLikes = async (req, res) => {
 }
 
 const getComentarios = async (req, res) => {
-    verifySession(req,res);
+    verifySession(req, res);
     const postid = req.params.postid;
     try {
         const post = await Post.findById(postid).exec();
@@ -105,7 +119,7 @@ const getComentarios = async (req, res) => {
 }
 
 const handleNewComment = async (req, res) => {
-    verifySession(req,res);
+    verifySession(req, res);
     const user = req.body.user;
     const content = req.body.content;
     const date = req.body.date;
@@ -113,93 +127,102 @@ const handleNewComment = async (req, res) => {
     try {
         const post = await Post.findById(postid).exec();
         const newComments = post.comments;
-        newComments.push({
-            "user":user,
-            "content":content,
-            "date":date
-        })
-        Post.findByIdAndUpdate(post, {comments: newComments}, (error, result) => {
+        const newComment = {
+            "user": user,
+            "content": content,
+            "date": date
+        }
+        post.comments.push(newComment)
+        post.save();
+        console.log(post, post.comments, post.comments[post.comments.length-1]);
+        res.status(201).json({ 'comment': post.comments[post.comments.length-1] })
+        /*
+        const result = await Post.findByIdAndUpdate(post, { comments: newComments }, (error, result) => {
             if (error) {
                 res.status(500).json({ 'message': error });
-            } else {
-                res.status(204).json({ 'success': result });
-            }
+            } 
         })
+        const updatedPost = await Post.findById(postid).exec();
+        console.log(updatedPost, updatedPost.comments, updatedPost.comments[updatedPost.comments.length-1]);
+        res.status(201).json({ 'comment': updatedPost.comments[updatedPost.comments.length-1] });*/
     } catch (err) {
         res.status(500).json({ 'message': err.message })
     }
 }
 
-const matchAutores = async (req,res)=>{
+const matchAutores = async (req, res) => {
     const postid = req.body.postid;
     const userid = req.body.userid;
-    try{
+    try {
         const post = await Post.findById(postid).exec();
-        if(post.user === userid) res.json({match:true})
-        else res.json({match:false});
-    }catch(err){
-        res.status(500).json({'message': err.message});
-    } 
+        if (post.user === userid) res.json({ match: true })
+        else res.json({ match: false });
+    } catch (err) {
+        res.status(500).json({ 'message': err.message });
+    }
 }
 
-const deletePost = async(req,res)=>{
-    verifySession(req,res);
+const deletePost = async (req, res) => {
+    verifySession(req, res);
     const postid = req.body.postid;
-    try{
+    try {
         const post = await Post.findById(postid).exec();
-        Post.findOneAndDelete({_id: postid }, (err, docs) =>{
-            if (err) res.json({'message':err})
-            else res.json({'success': 'The post has been deleted'})
+        Post.findOneAndDelete({ _id: postid }, (err, docs) => {
+            if (err) res.json({ 'message': err })
+            else res.json({ 'success': 'The post has been deleted' })
         });
-    }catch(err){
-        res.status(500).json({'message': err})
+    } catch (err) {
+        res.status(500).json({ 'message': err })
     }
 }
 
-const matchCommentAutores = async (req,res)=>{
+const matchCommentAutores = async (req, res) => {
     const postid = req.body.postid;
     const commentid = req.body.commentid;
     const userid = req.body.userid;
-    try{
+    try {
         const post = await Post.findById(postid).exec();
+        console.log(post)
         const comment = post.comments.filter(comment => comment._id.toString() === commentid)[0];
-        if(comment.user === userid) res.json({match:true})
-        else res.json({match:false});
-    }catch(err){
-        res.status(500).json({'message': err.message});
+        console.log(comment, commentid )
+        if (comment.user === userid) res.json({ match: true })
+        else res.json({ match: false });
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ 'message': err.message });
     }
-    
+
 }
 
-const deleteComment = async(req,res)=>{
-    verifySession(req,res);
+const deleteComment = async (req, res) => {
+    verifySession(req, res);
     const postid = req.body.postid;
     const commentid = req.body.commentid;
-    try{
+    try {
         const post = await Post.findById(postid).exec();
         const comments = post.comments;
         //Filtramos el comentario cuya ID recibimos para eliminar
-        const newComments = comments.filter(comment=> comment._id.toString() !== commentid);
+        const newComments = comments.filter(comment => comment._id.toString() !== commentid);
         //Actualizamos los comentarios del post sin el comentario que eliminamos
-        Post.findOneAndUpdate({ _id: postid }, { comments: newComments }, (err, docs) =>{
-            if (err) res.json({'message':err})
-            else res.json({'success': 'The comment has been deleted'})
+        Post.findOneAndUpdate({ _id: postid }, { comments: newComments }, (err, docs) => {
+            if (err) res.json({ 'message': err })
+            else res.json({ 'success': 'The comment has been deleted' })
         });
-    }catch(err){
-        res.status(500).json({'message': err})
+    } catch (err) {
+        res.status(500).json({ 'message': err })
     }
 }
 
-module.exports = { 
-    handleNewPost, 
-    showPosts, 
-    getPostId, 
-    handleLike, 
-    getLikes, 
-    getComentarios, 
-    handleNewComment, 
+module.exports = {
+    handleNewPost,
+    showPosts,
+    getPostId,
+    handleLike,
+    getLikes,
+    getComentarios,
+    handleNewComment,
     matchAutores,
     deletePost,
     matchCommentAutores,
     deleteComment
- };
+};

@@ -6,8 +6,8 @@ const getPublicacionesUsuario = async ()=>{
     const link = document.URL.split("?")[1]?.length?
         `/user-publicaciones/${username}`:
         `/user-publicaciones/${await getUserId()}`;
-    const res = await fetch(link);
-    const data = await res.json();
+    const req = await fetch(link);
+    const data = await req.json();
     return data;
 }
 

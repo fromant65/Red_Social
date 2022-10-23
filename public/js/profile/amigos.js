@@ -17,7 +17,7 @@ const determinarSeguimiento = async () => {
 
 seguir.addEventListener('click', async()=>{
     const userid = await getUserId();
-    const res = await fetch(`/profile/seguir`, {
+    const req = await fetch(`/profile/seguir`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -28,8 +28,7 @@ seguir.addEventListener('click', async()=>{
             "client": userid
         })
     })
-    const data = await res.json();
-    console.log(data);
+    const data = await req.json();
     if(data.success){
         generarBotonCorrespondiente();
     }

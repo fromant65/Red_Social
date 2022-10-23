@@ -6,8 +6,8 @@ const cargarInfoUsuario = async()=>{
     const link = document.URL.split("?")[1]?.length?
         `/user-info/${username}`:
         `/user-info/${await getUserId()}`;
-    const res = await fetch(link);
-    const data = await res.json()
+    const req = await fetch(link);
+    const data = await req.json()
     return data.user;
 }
 

@@ -4,8 +4,8 @@ const searchResult = document.querySelector('.search-result');
 
 submit.addEventListener('click', async()=>{
     const username = input.value;
-    const response = await fetch(`/search-user/${username}`);
-    const users = await response.json();
+    const req = await fetch(`/search-user/${username}`);
+    const users = await req.json();
     if(users.length !== 0 && searchUser.value){
         searchResult.classList.add('search-result-visible')
         searchResult.classList.remove('search-result-invisible')

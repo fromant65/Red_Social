@@ -33,6 +33,7 @@ const observer = new IntersectionObserver(cargarMasPublicacines);
 const fetchPublicaciones = async (fecha)=>{
     //Esta funcion hace un fetch de publicaciones dada una determinada fecha (objeto Date)
     const date = await fecha;
+    const userid = await getUserId();
     const request = await fetch(`home/publicaciones`,
         {
             method: 'POST',
@@ -41,7 +42,8 @@ const fetchPublicaciones = async (fecha)=>{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'lastPostDate':date
+                'lastPostDate':date,
+                'userid': userid
             })
         })
     const content = await request.json();

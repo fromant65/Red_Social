@@ -19,7 +19,7 @@ newPass2.addEventListener('input', ()=>{
 submitNewPass.addEventListener('click', async(e)=>{
     e.preventDefault();
     //Fetch current password sent and compare with account password on server
-    const response = await fetch(`${location}/check-password`, {
+    const req = await fetch(`${location}/check-password`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -29,9 +29,9 @@ submitNewPass.addEventListener('click', async(e)=>{
             "password":passActual.value
         })
     })
-    const dataCheck = await response.json();
-    //console.log(dataCheck);
-    if(dataCheck.res === false){
+    const res = await req.json();
+    //console.log(res);
+    if(res.res === false){
         warningCurrentPassword.classList.add('warning-active');
         warningCurrentPassword.innerHTML = "La contraseña ingresada no coincide con la de la cuenta";
     }
@@ -40,9 +40,9 @@ submitNewPass.addEventListener('click', async(e)=>{
         warningNewPasswords.innerHTML = "Las nueva contraseña y la actual deben ser distintas";
         return;
     } 
-    if(dataCheck.res === true && newPass1.value === newPass2.value){
+    if(res.res === true && newPass1.value === newPass2.value){
         //Update password
-        const response = await fetch(`${location}/update-password`, {
+        const req = await fetch(`${location}/update-password`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -52,9 +52,9 @@ submitNewPass.addEventListener('click', async(e)=>{
                 "password":newPass1.value
             })
         })
-        const data = await response.json();
-        //console.log(data);
-        if(data.success) {
+        const res = await req.json();
+        //console.log(res);
+        if(res.success) {
             changePasswordResult.innerHTML = "Se ha modificado la contraseña correctamente";
             changePasswordResult.classList.add('success-active')
             warningNewPasswords.classList.remove('warning-active')
@@ -62,7 +62,7 @@ submitNewPass.addEventListener('click', async(e)=>{
         }
         else {
             changePasswordResult.classList.add('warning-active')
-            changePasswordResult.innerHTML = `Ha ocurrido un error al modificar la contraseña: ${data.error}`;
+            changePasswordResult.innerHTML = `Ha ocurrido un error al modificar la contraseña: ${res.error}`;
         }
     }
 })

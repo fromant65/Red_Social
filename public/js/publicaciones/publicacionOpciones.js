@@ -2,7 +2,7 @@ const matchAutorPublicacion = async(id)=>{
     //Esta funcion determina si el que intenta abrir las opciones de la publicación y su autor
     //son la misma persona
     const userid = await getUserId();
-    const response = await fetch(`home/match-autores`, {
+    const req = await fetch(`home/match-autores`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -13,7 +13,7 @@ const matchAutorPublicacion = async(id)=>{
             "userid":userid
         })
     })
-    const data = await response.json();
+    const data = await req.json();
     return data.match //El fetch devuelve un json que tiene un atributo match que es true o false
 }
 
@@ -27,7 +27,7 @@ const generarPublicacionOpciones = async(id, div)=>{
         const eliminarPost = document.createElement('button');
         eliminarPost.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar publicación.'
         eliminarPost.addEventListener('click', async ()=>{
-            const response = await fetch(`${location}/eliminar-post`, {
+            const req = await fetch(`${location}/eliminar-post`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -37,7 +37,7 @@ const generarPublicacionOpciones = async(id, div)=>{
                     "postid":id
                 })
             })
-            const resultado = await response.json();
+            const resultado = await req.json();
             if(resultado.success) document.getElementById(id).parentNode.removeChild(document.getElementById(id))
             else alert('No se pudo eliminar la publicación: '+ resultado.message)
         })

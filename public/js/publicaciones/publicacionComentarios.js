@@ -8,10 +8,10 @@ const getComentarios = async (publicacion)=>{
     El fetch nos devuelve la lista de comentarios y los creamos como una publicación
      */
     const postId = await getPostId(publicacion);
-    const resComentarios = await fetch(`home/getcomentarios/${postId}`)
+    const reqComentarios = await fetch(`home/getcomentarios/${postId}`)
     window.history.pushState("","",`${document.URL.split("?")[0]}`);
     window.history.pushState("","",`${location}?id=${postId}`);
-    const comentarios = await resComentarios.json();
+    const comentarios = await reqComentarios.json();
     return comentarios;
 }
 
@@ -120,7 +120,7 @@ const matchAutorComentario = async(postid, commentid)=>{
     //Esta funcion determina si el que intenta abrir las opciones de la publicación y su autor
     //son la misma persona
     const userid = await getUserId();
-    const response = await fetch(`home/match-autores-comentarios`, {
+    const req = await fetch(`home/match-autores-comentarios`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -132,7 +132,7 @@ const matchAutorComentario = async(postid, commentid)=>{
             "userid":userid
         })
     })
-    const data = await response.json();
+    const data = await req.json();
     return data.match //El fetch devuelve un json que tiene un atributo match que es true o false
 }
 
@@ -141,12 +141,11 @@ const generarComentarioOpciones = async(postid, commentid, div)=>{
     const opciones = div;
     const opcionesContainer = document.createElement('div');
     opcionesContainer.classList.add('opciones-menu')
-    console.log(await matchAutorComentario(postid, commentid))
     if(await matchAutorComentario(postid, commentid)) {
         const eliminarComentario = document.createElement('button');
         eliminarComentario.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar comentario.'
         eliminarComentario.addEventListener('click', async ()=>{
-            const response = await fetch(`home/eliminar-comentario`, {
+            const req = await fetch(`home/eliminar-comentario`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -157,7 +156,7 @@ const generarComentarioOpciones = async(postid, commentid, div)=>{
                     "commentid": commentid
                 })
             })
-            const resultado = await response.json();
+            const resultado = await req.json();
             //Si se pudo eliminar, eliminamos el html del comentario
             if(resultado.success) document.getElementById(`${commentid}`).parentNode.removeChild(document.getElementById(`${commentid}`));
             else alert('No se pudo eliminar el comentario: '+ resultado.message)
@@ -175,7 +174,7 @@ const realizarComentario = async (e)=>{
     const user = await getUserId();
     const date = new Date();
     const postId = input.getAttribute('postId');
-    fetch(`home/comentar`, {
+    const req = await fetch(`home/comentar`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -188,10 +187,13 @@ const realizarComentario = async (e)=>{
             "date":date
         })
     })
+    const res = await req.json();
+    const comment = res.comment;
     const newComment = crearComentario({
-        "user":user,
-        "content":content,
-        "date":date
+        "user":comment.user,
+        "content":comment.content,
+        "date":comment.date,
+        "_id": comment._id
     })
     const container = document.querySelector('.comments-container');
     input.value = "";

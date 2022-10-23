@@ -46,7 +46,7 @@ submitNewData.addEventListener('click', async (e) => {
         return;
     }
 
-    const response = await fetch(`${location}/update-user-data`, {
+    const req = await fetch(`${location}/update-user-data`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -54,16 +54,16 @@ submitNewData.addEventListener('click', async (e) => {
         },
         body: JSON.stringify(newData)
     })
-    const data = await response.json();
+    const res = await req.json();
     //console.log(data);
-    if (data.success) {
+    if (res.success) {
         changeDataResult.innerHTML = "Se han modificado los datos correctamente";
         changeDataResult.classList.add('success-active')
         warningCurrentPassword.classList.remove('warning-active');
     }
     else {
         changeDataResult.classList.add('warning-active')
-        changeDataResult.innerHTML = `Ha ocurrido un error al modificar la contraseña: ${data.error}`;
+        changeDataResult.innerHTML = `Ha ocurrido un error al modificar la contraseña: ${res.error}`;
     }
 
 })

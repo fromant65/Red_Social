@@ -126,7 +126,6 @@ const createChatHTML = async (chatid) => {
         messageDiv.setAttribute('author', messages[message].author);
         messageDiv.setAttribute('date', messages[message].date);
         const user = await getUserId();
-        console.log(user, messageDiv.getAttribute('author'))
         if (messageDiv.getAttribute('author') === user) {
             messageDiv.classList.add('message-self');
             const messageFiller = document.createElement('div');

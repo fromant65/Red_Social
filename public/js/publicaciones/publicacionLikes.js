@@ -28,7 +28,7 @@ const darLike = async (publicacion)=>{
 const cargarLikes = async (publicacion)=>{
     //Esta funcion obtiene la cantidad de likes de una publicación y la retorna
     const postId =  await getPostId(publicacion)
-    const resLikes = await fetch(`home/getlikes`, {
+    const reqLikes = await fetch(`home/getlikes`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -38,7 +38,8 @@ const cargarLikes = async (publicacion)=>{
             "postid":postId
         })
     })
-    const likes = await resLikes.json();
-    return likes.likes;
+    const res = await reqLikes.json();
+    const likes = res.likes
+    return likes;
 }
 
