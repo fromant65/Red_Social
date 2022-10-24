@@ -36,6 +36,18 @@ app.use('/login', require('./routes/login'))
 app.use('/home', require('./routes/home'))
 app.use('/config', require('./routes/config'))
 
+//Error 404
+app.all('*', (req,res)=>{
+    res.status(404);
+    if(req.accepts('html')){
+        res.sendFile(path.join(__dirname, 'views', '404.html'))
+    }else if(req.accepts('json')){
+        res.json({error:"404 no encontrado"})
+    }else{
+        res.type('txt').send("404 no encontrado")
+    }
+})
+
 mongoose.connection.once('open', ()=>{
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
