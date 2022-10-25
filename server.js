@@ -31,6 +31,10 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 //Routes
 app.use('/', require('./routes/root'))
+app.use('/', require('./routes/rootChat'))
+app.use('/', require('./routes/rootFollowers'))
+app.use('/', require('./routes/rootSearch'))
+app.use('/', require('./routes/rootProfile'))
 app.use('/register', require('./routes/register'))
 app.use('/login', require('./routes/login'))
 app.use('/home', require('./routes/home'))

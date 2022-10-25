@@ -1,6 +1,6 @@
 const Chat = require('../model/Chat')
 const User = require('../model/User')
-const { verifySession } = require('./verifySession');
+const { verifySession } = require('../middleware/verifySession');
 
 const getChatsFromUser = async (req, res) => {
     verifySession(req, res);

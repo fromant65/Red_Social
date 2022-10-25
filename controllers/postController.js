@@ -1,6 +1,6 @@
 const Post = require('../model/Post')
 const User = require('../model/User')
-const { verifySession } = require('./verifySession');
+const { verifySession } = require('../middleware/verifySession');
 
 const handleNewPost = async (req, res) => {
     verifySession(req, res);

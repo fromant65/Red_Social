@@ -1,7 +1,9 @@
 const User = require('../model/User');
 const Post = require('../model/Post');
+const {verifySession} = require('../middleware/verifySession');
 
 const getUserInfo = async (req, res) => {
+    verifySession()
     const user = req.params.username;
     const data = await User.findOne({ username: user }).exec();
     if (data) res.status(200).json({ user: data });
@@ -10,6 +12,7 @@ const getUserInfo = async (req, res) => {
 
 /*Funcion para obtener los posts de determinado usuario*/
 const getUserPosts = async (req, res) => {
+    verifySession()
     const userid = req.params.username;
     Post.find({ user: userid }).lean().exec((err, posts) => {
         if (!posts) res.status(204);
@@ -18,6 +21,7 @@ const getUserPosts = async (req, res) => {
 }
 
 const follow = async (req, res) => {
+    verifySession()
     const followedId = req.body.userFollowed;
     const followerId = req.body.client;
     try {
