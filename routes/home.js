@@ -44,6 +44,8 @@ router.post('/match-autores-comentarios', postController.matchCommentAutores);
 
 router.post('/eliminar-post', postController.deletePost);
 
+router.post('/editar-post', postController.editPost);
+
 router.post('/eliminar-comentario', postController.deleteComment);
 
 module.exports = router;

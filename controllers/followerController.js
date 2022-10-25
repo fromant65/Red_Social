@@ -2,7 +2,7 @@ const User = require('../model/User');
 const {verifySession} = require('../middleware/verifySession');
 
 const getFollowed = async (req,res)=>{
-    verifySession();
+    verifySession(req,res);
     const username = req.params.username;
     try{
         const user = await User.findOne({username:username}).exec();
@@ -13,7 +13,7 @@ const getFollowed = async (req,res)=>{
 }
 
 const getFollowers = async (req,res)=>{
-    verifySession();
+    verifySession(req,res);
     const username = req.params.username;
     try{
         const user = await User.findOne({username:username}).exec();

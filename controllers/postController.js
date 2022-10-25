@@ -134,7 +134,6 @@ const handleNewComment = async (req, res) => {
         }
         post.comments.push(newComment)
         post.save();
-        console.log(post, post.comments, post.comments[post.comments.length-1]);
         res.status(201).json({ 'comment': post.comments[post.comments.length-1] })
         /*
         const result = await Post.findByIdAndUpdate(post, { comments: newComments }, (error, result) => {
@@ -182,13 +181,10 @@ const matchCommentAutores = async (req, res) => {
     const userid = req.body.userid;
     try {
         const post = await Post.findById(postid).exec();
-        console.log(post)
         const comment = post.comments.filter(comment => comment._id.toString() === commentid)[0];
-        console.log(comment, commentid )
         if (comment.user === userid) res.json({ match: true })
         else res.json({ match: false });
     } catch (err) {
-        console.log(err.message)
         res.status(500).json({ 'message': err.message });
     }
 
@@ -213,6 +209,23 @@ const deleteComment = async (req, res) => {
     }
 }
 
+const editPost = async(req,res)=>{
+    verifySession(req,res);
+    const newContent = req.body.content;
+    const postid = req.body.postid;
+    try{
+        await Post.findByIdAndUpdate(postid, {content:newContent}).exec();
+        /*const post = await Post.findOneAndUpdate({ _id: postid }, {content:newContent}, (err,docs)=>{
+            if (err) res.json({ 'message': err })
+            else res.json({ 'success': 'The post has been updated' })
+        });*/
+        res.json({success:newContent});
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ 'message': err })
+    }
+}
+
 module.exports = {
     handleNewPost,
     showPosts,
@@ -224,5 +237,6 @@ module.exports = {
     matchAutores,
     deletePost,
     matchCommentAutores,
-    deleteComment
+    deleteComment,
+    editPost
 };
