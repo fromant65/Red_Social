@@ -23,9 +23,9 @@ const showPosts = async (req, res) => {
     verifySession(req, res);
     const userid = req.body.userid;
     try {
-        const user = await User.findOne({username: userid}).exec();
-        const following =[];
-        for(follow in user.following){
+        const user = await User.findOne({ username: userid }).exec();
+        const following = [];
+        for (follow in user.following) {
             following.push(user.following[follow].username)
         }
         following.push(userid);
@@ -36,13 +36,13 @@ const showPosts = async (req, res) => {
         //La siguiente funcion busca los posts entre la primera y la ultima fecha indicadas
         //que por definicion de la función tienen 1 hora de diferencia. 
         //Ademas filtra solo los posts de los seguidores del usuario y el mismo usuario
-        Post.find({ date: { "$gte": firstDate, "$lt": lastDate }, user:{$in: following}}).lean().exec((err, posts) => {
+        Post.find({ date: { "$gte": firstDate, "$lt": lastDate }, user: { $in: following } }).lean().exec((err, posts) => {
             if (!posts) res.status(204);
             return res.status(200).json(posts);
         });
-    }catch(err){
+    } catch (err) {
         res.status(500).json({ 'message': err.message })
-    } 
+    }
 }
 
 const getPostId = async (req, res) => {
@@ -134,7 +134,7 @@ const handleNewComment = async (req, res) => {
         }
         post.comments.push(newComment)
         post.save();
-        res.status(201).json({ 'comment': post.comments[post.comments.length-1] })
+        res.status(201).json({ 'comment': post.comments[post.comments.length - 1] })
         /*
         const result = await Post.findByIdAndUpdate(post, { comments: newComments }, (error, result) => {
             if (error) {
@@ -209,17 +209,40 @@ const deleteComment = async (req, res) => {
     }
 }
 
-const editPost = async(req,res)=>{
-    verifySession(req,res);
+const editPost = async (req, res) => {
+    verifySession(req, res);
     const newContent = req.body.content;
     const postid = req.body.postid;
-    try{
-        await Post.findByIdAndUpdate(postid, {content:newContent}).exec();
+    try {
+        await Post.findByIdAndUpdate(postid, { content: newContent }).exec();
         /*const post = await Post.findOneAndUpdate({ _id: postid }, {content:newContent}, (err,docs)=>{
             if (err) res.json({ 'message': err })
             else res.json({ 'success': 'The post has been updated' })
         });*/
-        res.json({success:newContent});
+        res.json({ success: newContent });
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).json({ 'message': err })
+    }
+}
+
+const editComment = async (req,res) => {
+    verifySession(req, res);
+    const newContent = req.body.content;
+    const postid = req.body.postid;
+    const commentid = req.body.commentid
+    try {
+        const post = await Post.findById(postid).exec();
+        let comments = post.comments;
+        for(comment in comments){
+            if(comments[comment]._id.toString() === commentid){
+                comments[comment].content = newContent;
+            }   
+        }
+        Post.findOneAndUpdate({ _id: postid }, { comments:comments }, (err, docs) => {
+            if (err) res.json({ 'message': err })
+        });
+        res.json({ success: newContent });
     } catch (err) {
         console.log(err.message)
         res.status(500).json({ 'message': err })
@@ -238,5 +261,6 @@ module.exports = {
     deletePost,
     matchCommentAutores,
     deleteComment,
-    editPost
+    editPost,
+    editComment
 };

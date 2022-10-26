@@ -54,7 +54,7 @@ const crearEliminar = async (id, div) => {
 const crearEditar = async (id, div) => {
     const opcionesContainer = div
     const editarPost = document.createElement('button');
-    editarPost.innerHTML = '<i class="fa-solid fa-trash"></i> Editar publicación.'
+    editarPost.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar publicación.'
     editarPost.addEventListener('click', async () => {
         const editInput = crearEditInput(id);
         document.body.appendChild(editInput);

@@ -48,4 +48,6 @@ router.post('/editar-post', postController.editPost);
 
 router.post('/eliminar-comentario', postController.deleteComment);
 
+router.post('/editar-comentario', postController.editComment )
+
 module.exports = router;

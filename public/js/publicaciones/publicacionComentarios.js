@@ -142,28 +142,104 @@ const generarComentarioOpciones = async(postid, commentid, div)=>{
     const opcionesContainer = document.createElement('div');
     opcionesContainer.classList.add('opciones-menu')
     if(await matchAutorComentario(postid, commentid)) {
-        const eliminarComentario = document.createElement('button');
-        eliminarComentario.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar comentario.'
-        eliminarComentario.addEventListener('click', async ()=>{
-            const req = await fetch(`home/eliminar-comentario`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "postid":postid,
-                    "commentid": commentid
-                })
-            })
-            const resultado = await req.json();
-            //Si se pudo eliminar, eliminamos el html del comentario
-            if(resultado.success) document.getElementById(`${commentid}`).parentNode.removeChild(document.getElementById(`${commentid}`));
-            else alert('No se pudo eliminar el comentario: '+ resultado.message)
-        })
-        opcionesContainer.appendChild(eliminarComentario);
+        await crearEliminarComentario(postid, commentid, opcionesContainer);
+        await crearEditarComentario(postid, commentid, opcionesContainer);
     }
     opciones.appendChild(opcionesContainer);
+}
+
+const crearEliminarComentario = async(postid, commentid, container)=>{
+    const opcionesContainer = container;
+    const eliminarComentario = document.createElement('button');
+    eliminarComentario.innerHTML = '<i class="fa-solid fa-trash"></i> Eliminar comentario.'
+    eliminarComentario.addEventListener('click', async ()=>{
+        const req = await fetch(`home/eliminar-comentario`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "postid":postid,
+                "commentid": commentid
+            })
+        })
+        const resultado = await req.json();
+        //Si se pudo eliminar, eliminamos el html del comentario
+        if(resultado.success) document.getElementById(`${commentid}`).parentNode.removeChild(document.getElementById(`${commentid}`));
+        else alert('No se pudo eliminar el comentario: '+ resultado.message)
+    })
+    opcionesContainer.appendChild(eliminarComentario);
+}
+
+const crearEditarComentario = async (postid, commentid, container)=>{
+    const opcionesContainer = container;
+    const editarComment = document.createElement('button');
+    editarComment.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar comentario.'
+    editarComment.addEventListener('click', async () => {
+        const editInput = await crearEditCommentInput(postid, commentid);
+        document.body.appendChild(editInput);
+    })
+    opcionesContainer.appendChild(editarComment);
+}
+
+const crearEditCommentInput = async (postid, commentid)=>{
+    const container = document.createElement('div');
+    const exit = document.createElement('div');
+    const editBox = document.createElement('div');
+    const newText = document.createElement('input');
+    const update = document.createElement('input');
+
+    container.classList.add('edit-post-container');
+    editBox.classList.add('edit-post-box');
+    newText.classList.add('edit-post-content');
+    update.classList.add('edit-post-submit');
+    exit.classList.add('edit-post-exit')
+
+    exit.innerText = 'X';
+
+    newText.placeholder = 'Ingresa el nuevo texto'
+
+    update.type = 'submit';
+    update.disabled = true;
+
+    newText.addEventListener('input', ()=>{
+        if(newText.value!==''){
+            update.disabled = false;
+        }else{
+            update.disabled = true;
+        }
+    })
+
+    update.addEventListener('click', async()=>{
+        const req = await fetch(`home/editar-comentario`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "postid": postid,
+                "commentid": commentid,
+                "content": newText.value
+            })
+        })
+        const resultado = await req.json();
+        if (resultado.success) {
+            document.getElementById(commentid).children[3].innerText=resultado.success;
+            container.innerHTML ='';
+            container.style.display='none';
+        }else alert('No se pudo eliminar el comentario: ' + resultado.message)
+    })
+
+    exit.addEventListener('click', ()=>{
+        container.innerHTML ='';
+        container.style.display='none';
+    })
+
+    editBox.append(newText, update);
+    container.append(exit, editBox);
+    return container
 }
 
 const realizarComentario = async (e)=>{

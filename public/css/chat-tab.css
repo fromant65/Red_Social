@@ -58,7 +58,7 @@
 }
 
 .chat-container{
-    position: absolute;
+    position: fixed;
     display: block;
     width: 300px;
     right: 0;
