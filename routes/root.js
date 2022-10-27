@@ -15,6 +15,12 @@ router.get('/login(.html)?', (req,res)=>{
     else res.sendFile(path.join(__dirname, '..', 'views', 'login.html'))
 })
 
+router.get('/about(.html)?', (req,res)=>{
+    let session=req.session;
+    if(session.userid) res.redirect('/home')
+    else res.sendFile(path.join(__dirname, '..', 'views', 'about.html'))
+})
+
 router.get('/register(.html)?', (req,res)=>{
     let session=req.session;
     if(session.userid) res.redirect('/home')
