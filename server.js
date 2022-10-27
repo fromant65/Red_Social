@@ -35,7 +35,7 @@ app.use('/register', require('./routes/register'))
 app.use('/login', require('./routes/login'))
 app.use('/home', require('./routes/home'))
 app.use('/config', require('./routes/config'))
-app.use('/', require('./routes/404'))
+app.use('/', require('./routes/404')) 
 
 mongoose.connection.once('open', ()=>{
     console.log('Connected to MongoDB');
