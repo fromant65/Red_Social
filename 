@@ -1,0 +1,91 @@
+[1mdiff --git a/routes/home.js b/routes/home.js[m
+[1mindex 450686a..a5c9dd7 100644[m
+[1m--- a/routes/home.js[m
+[1m+++ b/routes/home.js[m
+[36m@@ -1,53 +1,54 @@[m
+[31m-const express = require('express');[m
+[32m+[m[32mconst express = require("express");[m
+ const router = express.Router();[m
+[31m-const path = require('path');[m
+[31m-const postController = require('../controllers/postController')[m
+[32m+[m[32mconst path = require("path");[m
+[32m+[m[32mconst postController = require("../controllers/postController");[m
+ [m
+ //Para poder pedir la ruta /home, tenemos que estar logeados (tiene que haber una sesión activa)[m
+[31m-//Así que si estamos logeados, mostramos la página. [m
+[32m+[m[32m//Así que si estamos logeados, mostramos la página.[m
+ //Si no, volvemos al login[m
+[31m-router.get('/', (req,res)=>{[m
+[31m-    let session=req.session;[m
+[31m-    if(session.userid) res.sendFile(path.join(__dirname, '..', 'views', 'home.html'))[m
+[31m-    else res.redirect('/login'); [m
+[31m-})[m
+[31m-[m
+[31m-//Si pedimos la ruta getId, quiere decir que hemos solicitado la id del usuario. [m
+[32m+[m[32mrouter.get("/", (req, res) => {[m
+[32m+[m[32m  let session = req.session;[m
+[32m+[m[32m  if (session.userid)[m
+[32m+[m[32m    res.sendFile(path.join(__dirname, "..", "views", "home.html"));[m
+[32m+[m[32m  else res.redirect("/login");[m
+[32m+[m[32m});[m
+[32m+[m
+[32m+[m[32m//Si pedimos la ruta getId, quiere decir que hemos solicitado la id del usuario.[m
+ //Devolvemos la sesion para que el frontend se encargue de hacer un fetch con los datos de la publicación[m
+[31m-router.get('/getUserId', (req,res)=>{[m
+[31m-    let session = req.session;[m
+[31m-    if(session.userid) res.json({session});[m
+[31m-    else res.redirect('/login');[m
+[31m-})[m
+[32m+[m[32mrouter.get("/getUserId", (req, res) => {[m
+[32m+[m[32m  let session = req.session;[m
+[32m+[m[32m  if (session.userid) res.json({ session });[m
+[32m+[m[32m  else res.redirect("/login");[m
+[32m+[m[32m});[m
+ [m
+ //Si hacemos un post request a /home/publicar, deberemos manejar la nueva publicación desde el controlador[m
+[31m-router.post('/publicar', postController.handleNewPost);[m
+[32m+[m[32mrouter.post("/publicar", postController.handleNewPost);[m
+ [m
+[31m-//Si hacemos un post request a /home/publicaciones, [m
+[32m+[m[32m//Si hacemos un post request a /home/publicaciones,[m
+ //deberemos manejar el pedido para mostrar publicaciones desde el controlardor[m
+[31m-router.post('/publicaciones', postController.showPosts)[m
+[32m+[m[32mrouter.post("/publicaciones", postController.showPosts);[m
+ [m
+ //Si hacemos un post request a /home/[m
+[31m-router.post('/postId', postController.getPostId);[m
+[32m+[m[32mrouter.post("/postId", postController.getPostId);[m
+ [m
+[31m-router.post('/like', postController.handleLike);[m
+[32m+[m[32mrouter.post("/like", postController.handleLike);[m
+ [m
+[31m-router.post('/getlikes', postController.getLikes);[m
+[32m+[m[32mrouter.post("/getlikes", postController.getLikes);[m
+ [m
+[31m-router.get('/getcomentarios/:postid', postController.getComentarios);[m
+[32m+[m[32mrouter.get("/getcomentarios/:postid", postController.getComentarios);[m
+ [m
+[31m-router.post('/comentar', postController.handleNewComment);[m
+[32m+[m[32mrouter.post("/comentar", postController.handleNewComment);[m
+ [m
+[31m-router.post('/match-autores', postController.matchAutores);[m
+[32m+[m[32mrouter.post("/match-autores", postController.matchAutores);[m
+ [m
+[31m-router.post('/match-autores-comentarios', postController.matchCommentAutores);[m
+[32m+[m[32mrouter.post("/match-autores-comentarios", postController.matchCommentAutores);[m
+ [m
+[31m-router.post('/eliminar-post', postController.deletePost);[m
+[32m+[m[32mrouter.post("/eliminar-post", postController.deletePost);[m
+ [m
+[31m-router.post('/editar-post', postController.editPost);[m
+[32m+[m[32mrouter.post("/editar-post", postController.editPost);[m
+ [m
+[31m-router.post('/eliminar-comentario', postController.deleteComment);[m
+[32m+[m[32mrouter.post("/eliminar-comentario", postController.deleteComment);[m
+ [m
+[31m-router.post('/editar-comentario', postController.editComment )[m
+[32m+[m[32mrouter.post("/editar-comentario", postController.editComment);[m
+ [m
+[31m-module.exports = router;[m
+\ No newline at end of file[m
+[32m+[m[32mmodule.exports = router;[m
